@@ -4,7 +4,7 @@
 
 `Analise de desenvolvimento sistemas`
 
-`Eixo 3 - Projeto: Desenvolvimento de uma Aplicação Móvel em um Ambiente de Negócio - Turma 04 - 2024/1`
+`Eixo 3 - Projeto: Desenvolvimento de uma Aplicação Móvel em um Ambiente de Negócio - Turma 04`
 
 `2024/1`
 
