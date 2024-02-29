@@ -16,7 +16,7 @@ Este projeto busca redefinir a maneira como as pessoas se envolvem com eventos, 
 
 ## Integrantes
 
-- Fernando Marques
+- Fernanda Marques Assis
 - Julia Chaves Dutra
 - Luiz Eduardo Possidonio
 - Pedro Celso Mendes
