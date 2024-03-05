@@ -111,6 +111,4 @@ Para o cálculo do hardware necessário para o desenvolvimento, foi estimada a a
 
 Os serviços necessários para o projeto incluem despesas com provedores de internet para cada membro da equipe, bem como o armazenamento de dados em nuvem para a aplicação, considerando um período de 5 meses, com um valor total de R$ 10.366,00.
 
-
-
-
+![Orçameto](img/Orçamento_EventPass.PNG)
