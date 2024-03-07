@@ -101,7 +101,7 @@ Um diagrama de caso de uso é uma representação gráfica que mostra como atore
 Diagrama de casos de uso - Eventpass
 ![Casos de uso](img/diagramaCasoDeUso.svg)
 
-## Gestão do orçamento
+## Gestão do Orçamento
 
 O orçamento estabelecido prevê a execução do projeto em um prazo de 5 meses, distribuído em 5 pilares fundamentais: Recursos Humanos, Hardware, Software e Serviços.
 
@@ -112,3 +112,82 @@ Para o cálculo do hardware necessário para o desenvolvimento, foi estimada a a
 Os serviços necessários para o projeto incluem despesas com provedores de internet para cada membro da equipe, bem como o armazenamento de dados em nuvem para a aplicação, considerando um período de 5 meses, com um valor total de R$ 10.366,00.
 
 ![Orçameto](img/Orçamento_EventPass.PNG)
+
+## Plano de Gerenciamento de Recursos
+
+### 1. Equipe do Projeto
+* Fernanda Marques Assis
+* Júlia Chaves Dutra
+* Luiz Eduardo Possidonio
+* Pedro Celso Mendes
+* Samara Karoline de Almeida Costa
+* Sandro Shayne Dutra
+
+### 2. Organograma da Equipe 
+
+![organograma](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e3-proj-mov-t4-eventpass/assets/122751654/25b85824-8486-409a-addd-a1ac3de147ab)
+
+### 3. Diretório da Equipe do Projeto
+
+| Nome      | Função                        | Contato                                                               
+| -------   | ----------------------------- | ---------- |
+| Sandro Shayne    | Gerente de Projeto        | (31) 9 9697-7420      |
+| Luiz Eduardo     | Especialista em Testes    | (31) 9 8663-0589      |
+| Fernanda Marques | UI/UX Design              | (31) 9 9958-7394      |
+| Júlia Chaves     | Desenvolvedora            | (31) 9 9624-0052      |
+| Samara Almeida   | Desenvolvedora            | (31) 9 9909-7590      |
+| Pedro Celso      | Desenvolvedor             | (31) 9 9388-4893      |
+
+### 4. Papéis e Responsabilidades
+
+* **Gerente de Projeto:**
+Responsável por coordenar as atividades de desenvolvimento, definir metas e prazos, além de garantir a comunicação eficaz entre os membros da equipe e o progresso do projeto de acordo com o cronograma estabelecido.
+
+* **UI/UX Designer:**
+Responsável por criar designs de interface de usuário atraentes e intuitivos, utilizando ferramentas como Adobe XD ou Figma, garantindo uma experiência de usuário positiva em todo o aplicativo.
+
+* **Especialista de Testes:**
+Encarregado de planejar e executar testes de unidade e aceitação no aplicativo, a fim de garantir a estabilidade e a qualidade do software.
+
+* **Desenvolvedores:** 
+Encarregados de desenvolver a lógica de negócios e implementar a interface do usuário utilizando o React Native, garantindo uma experiência consistente e responsiva em dispositivos Android.
+
+### 5. Contratação de Novos Recursos e Substituição de Membros do Time
+
+Ficou acordado que o Gerente de Projeto possui a responsabilidade e a autoridade de realizar a contratação de novos recursos e substituição de membros da equipe (caso necessário). O Gerente de Projeto irá acompanhar, durante todo o ciclo de vida do projeto, como os recursos estão distribuídos garantindo que estejam disponíveis para a atividade correta e no tempo hábil. Em caso de necessidade de realocação de recursos, o Gerente de Projeto irá avaliar as competências necessárias, os recursos disponíveis e decidir a melhor alternativa visando sempre a escolha mais assertiva para o bom andamento do projeto.
+
+### 6. Treinamentos Necessários e Acessoria 
+
+Toda a equipe irá realizar a trilha de aprendizagem do micro-fundamento “Desenvolvimento de Aplicações Móveis” disponível no Eixo 3 a fim de se capacitar para o desenvolvimento deste projeto, utilizando o React Native. Em caso de necessidade de algum auxílio ou assessoria o Gerente de Projeto ou algum outro membro da equipe irá contatar o orientador do projeto visando obter o suporte necessário.
+
+### 7. Avaliação de Resultados
+
+Os procedimentos de avaliação de resultados da equipe serão realizados através de reuniões semanais com todos os envolvidos onde serão avaliadas todas as evoluções feitas até o momento, bem como os próximos passos que precisam ser dados para a continuidade do projeto, tendo como base tudo o que já foi concluído e o que ainda necessita ser realizado.
+
+### 8. Ferramentas de Colaboração
+
+* **Comunicação:** Whatsapp e Teams, para comunicação entre membros da equipe.
+* **Gestão de Tarefas:** GitHub, para acompanhamento e atribuição de tarefas.
+* **Controle de Versão:** Git e GitHub, para gerenciamento de código fonte e colaboração entre os desenvolvedores.
+
+### 9. Tecnologias Utilizadas
+
+* **Desenvolvimento:** React Native.
+* **Ferramentas de Design:** Adobe XD ou Figma.
+* **Testes:** A definir.
+
+### 10. Recursos Físicos Utilizados
+
+* Computadores Desktop (6)
+* Monitores (6)
+* Periféricos: 
+  * Teclados (6)
+  * Mouse (6)
+  * Fones de Ouvido (6)
+* Roteadores de Wi-Fi
+
+
+
+
+
+
