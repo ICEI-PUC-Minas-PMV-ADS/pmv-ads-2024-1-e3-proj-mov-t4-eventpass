@@ -101,6 +101,13 @@ Um diagrama de caso de uso é uma representação gráfica que mostra como atore
 Diagrama de casos de uso - Eventpass
 ![Casos de uso](img/diagramaCasoDeUso.svg)
 
+## Gestão de Tempo
+
+O acompanhamento do cronograma é o processo de monitoramento do progresso do projeto para atualizar o progresso e gerenciar as mudanças a partir da linha de base.
+
+<img width="1471" alt="Screenshot 2024-03-08 at 17 47 23" src="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e3-proj-mov-t4-eventpass/assets/65399666/a0f77a71-26e3-4983-a85c-fae7eb98a7d9">
+
+
 ## Gestão do Orçamento
 
 O orçamento estabelecido prevê a execução do projeto em um prazo de 5 meses, distribuído em 5 pilares fundamentais: Recursos Humanos, Hardware, Software e Serviços.
