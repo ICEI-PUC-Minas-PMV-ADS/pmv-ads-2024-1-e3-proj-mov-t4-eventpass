@@ -86,11 +86,11 @@ Os requisitos não funcionais não impedem o funcionamento da aplicação e est�
 
 | ID      | Descrição do Requisito                                                                                                                                   | Prioridade |
 | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| RNF-001 | A aplicação deve ser responsiva para rodar em todos os dispositivos.                                                                                     | MÉDIA      |
-| RNF-002 | A aplicação deve processar requisições do usuário em no máximo 10s.                                                                                      | BAIXA      |
-| RNF-003 | Apenas espectadores previamente cadastrados e logados poderão gerar ingressos                                                                            | MÉDIA      |
-| RNF-004 | A aplicação deve ser compatível com os principais navegadores do mercado.                                                                                | ALTA       |
-| RNF-005 | A aplicação deve seguir boas práticas de SEO. Isso inclui técnicas de otimização on-page e garantir a facilidade de rastreamento pelos motores de busca. | ALTA       |
+| RNF-001 | O aplicativo deve ser compatível com uma variedade de dispositivos móveis e tablets, adaptando-se automaticamente ao tamanho da tela e à orientação do dispositivo.                                                                                     | ALTA      |
+| RNF-002 | O tempo máximo de processamento das requisições do usuário deve ser de 10 segundos para garantir uma experiência responsiva.                                                                                      | BAIXA      |
+| RNF-003 | Apenas usuários previamente cadastrados e autenticados podem gerar ingressos no aplicativo móvel.                                                                            | AlTA      |
+| RNF-004 | O aplicativo deve ser compatível com os principais sistemas operacionais móveis, como iOS e Android, e suas versões mais recentes.                                                                                | ALTA       |
+| RNF-005 | 5. O aplicativo deve seguir as melhores práticas de otimização para dispositivos móveis, incluindo técnicas de SEO para garantir uma alta visibilidade nos resultados de busca em dispositivos móveis. Isso envolve otimização on-page e a facilitação do rastreamento pelos motores de busca móveis. | MÉDIA       |
 
 Com base nas Histórias de Usuário, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:
 
