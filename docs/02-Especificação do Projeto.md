@@ -141,15 +141,9 @@ O acompanhamento do cronograma é o processo de monitoramento do progresso do pr
 
 ## Gestão do Orçamento
 
-O orçamento estabelecido prevê a execução do projeto em um prazo de 5 meses, distribuído em 5 pilares fundamentais: Recursos Humanos, Hardware, Software e Serviços.
+O orçamento estabelecido prevê a execução do projeto em um prazo de 5 meses.
 
-Na alocação de recursos humanos, levamos em consideração a capacitação da equipe e os salários médios de cada cargo desempenhado pelos membros da equipe, totalizando R$ 159.188, 28.
-
-Para o cálculo do hardware necessário para o desenvolvimento, foi estimada a aquisição de estações de trabalho que ofereçam suporte aos softwares utilizados no desenvolvimento de uma aplicação, totalizando R$ 58.788, 00. Não foram considerados custos de manutenção e atualização do hardware.
-
-Os serviços necessários para o projeto incluem despesas com provedores de internet para cada membro da equipe, bem como o armazenamento de dados em nuvem para a aplicação, considerando um período de 5 meses, com um valor total de R$ 10.366, 00.
-
-![Orçameto](img/Orçamento_EventPass. PNG)
+![Orçameto](img/Orçamento_EventPass.jpg)
 
 ## Plano de Gerenciamento de Recursos
 
