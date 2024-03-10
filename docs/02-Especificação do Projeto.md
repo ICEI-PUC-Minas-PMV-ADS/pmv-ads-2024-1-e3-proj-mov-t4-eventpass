@@ -139,12 +139,6 @@ O acompanhamento do cronograma é o processo de monitoramento do progresso do pr
 
 <img width="1471" alt="Gestão de tempo" src="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e3-proj-mov-t4-eventpass/assets/65399666/a0f77a71-26e3-4983-a85c-fae7eb98a7d9">
 
-## Gestão do Orçamento
-
-O orçamento estabelecido prevê a execução do projeto em um prazo de 5 meses.
-
-![Orçameto](img/Orçamento_EventPass.jpg)
-
 ## Plano de Gerenciamento de Recursos
 
 ### 1. Equipe do Projeto
@@ -218,3 +212,9 @@ Os procedimentos de avaliação de resultados da equipe serão realizados atrav�
   + Mouse (6)
   + Fones de Ouvido (6)
 * Roteadores de Wi-Fi
+
+## Gestão do Orçamento
+
+O orçamento previsto para execução do projeto.
+
+![Orçameto](img/Orçamento_EventPass.jpg)
