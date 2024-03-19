@@ -8,28 +8,20 @@ Definição de como o software é estruturado em termos dos componentes que faze
 
 ## Diagrama de Classes
 
-O diagrama de classes ilustra graficamente como será a estrutura do software, e como cada uma das classes da sua estrutura estarão interligadas. Essas classes servem de modelo para materializar os objetos que executarão na memória.
+O diagrama de classes é uma ferramenta de modelagem em UML que descreve as classes do sistema, seus atributos e métodos, bem como os relacionamentos entre elas, essa visualização facilita a compreensão e comunicação entre os membros da equipe de desenvolvimento, sendo essencial no processo de design e implementação de software
 
-As referências abaixo irão auxiliá-lo na geração do artefato “Diagrama de Classes”.
+![Diagrama de classse](img/Class%20Diagram%20-%20EventPass.jpg)
+## Modelo ER 
 
-> - [Diagramas de Classes - Documentação da IBM](https://www.ibm.com/docs/pt-br/rational-soft-arch/9.6.1?topic=diagrams-class)
-> - [O que é um diagrama de classe UML? | Lucidchart](https://www.lucidchart.com/pages/pt/o-que-e-diagrama-de-classe-uml)
+O diagrama relacional ER (Entidade-Relacionamento) é uma ferramenta de modelagem utilizada para representar visualmente as entidades, seus atributos e os relacionamentos entre elas. Abaixo está o diagrama modelado pela equipe de desenvolvimento:
 
-## Modelo ER
-
-O Modelo ER representa através de um diagrama como as entidades (coisas, objetos) se relacionam entre si na aplicação interativa.]
-
-As referências abaixo irão auxiliá-lo na geração do artefato “Modelo ER”.
-
-> - [Como fazer um diagrama entidade relacionamento | Lucidchart](https://www.lucidchart.com/pages/pt/como-fazer-um-diagrama-entidade-relacionamento)
+![Diagrama ER](img/Diagrama%20ER%20-%20EventPASS.jpeg)
 
 ## Esquema Relacional
 
-O Esquema Relacional corresponde à representação dos dados em tabelas juntamente com as restrições de integridade e chave primária.
- 
-As referências abaixo irão auxiliá-lo na geração do artefato “Esquema Relacional”.
+Com base no diagrama de relacionamento ER realizado pela equipe, foi desenvolvido o seguinte projeto de base de dados para ilustrar as tabelas, seus atributos e as conexões entre elas, ajudando a compreender a organização dos dados em um banco de dados, facilitando o desenvolvimento e a manutenção do software desenvolvido.
 
-> - [Criando um modelo relacional - Documentação da IBM](https://www.ibm.com/docs/pt-br/cognos-analytics/10.2.2?topic=designer-creating-relational-model)
+![Base de dados](img/Esquema%20relacional%20-%20Base%20de%20dados.jpg)
 
 ## Modelo Físico
 
