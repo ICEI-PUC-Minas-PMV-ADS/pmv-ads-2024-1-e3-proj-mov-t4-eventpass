@@ -15,7 +15,7 @@ O diagrama de classes é uma ferramenta de modelagem em UML que descreve as clas
 
 O diagrama relacional ER (Entidade-Relacionamento) é uma ferramenta de modelagem utilizada para representar visualmente as entidades, seus atributos e os relacionamentos entre elas. Abaixo está o diagrama modelado pela equipe de desenvolvimento:
 
-![Diagrama ER](img/Diagrama%20ER%20-%20EventPASS.jpeg)
+![Diagrama ER](img/Diagrama%20ER%20-%20EventPASS.jpg)
 
 ## Esquema Relacional
 
