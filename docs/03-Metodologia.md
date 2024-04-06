@@ -50,7 +50,7 @@ Apresente a divisão de papéis entre os membros do grupo.
 Exemplificação: A equipe utiliza metodologias ágeis, tendo escolhido o Scrum como base para definição do processo de desenvolvimento. A equipe está organizada da seguinte maneira:
 - Scrum Master: Sandro Shayne;
 - Product Owner: Luiz Eduardo;
-- Equipe de Desenvolvimento: Júlia Chaves, Pedro Celso Mendes, Samara Almeida.
+- Equipe de Desenvolvimento: Júlia Chaves, Pedro Celso Mendes e Samara Almeida.
 - Equipe de Design: Fernanda Marques.
 
 > **Links Úteis**:
