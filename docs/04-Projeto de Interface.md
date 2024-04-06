@@ -6,7 +6,7 @@ A concepção da interface do sistema foi elaborada para melhorar a experiência
 
 O diagrama representa a análise do fluxo de interação entre o usuário e o sistema. Isso possibilita uma cuidadosa planificação das interações e dos caminhos das telas, que resultarão em um impacto positivo na qualidade do wireframe interativo que está sendo desenvolvido.
 
-![Fluxograma Eventpass  ](img/Eventpass.png)
+![Fluxograma](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e3-proj-mov-t4-eventpass/assets/122751654/302c8fee-e82d-49b1-aab2-39bbe1b72318)
 
 ## Wireframes
 
