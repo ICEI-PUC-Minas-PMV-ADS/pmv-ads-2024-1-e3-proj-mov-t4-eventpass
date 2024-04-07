@@ -5,8 +5,12 @@ A metodologia ágil foi adotada pelo grupo, com foco na priorização do backlog
 
 ## Relação de Ambientes de Trabalho
 
-Os artefatos do projeto são desenvolvidos a partir de diversas plataformas e a relação dos ambientes com seu respectivo propósito deverá ser apresentada em uma tabela que especifica que detalha Ambiente, Plataforma e Link de Acesso. 
-Nota: Vide documento modelo do estudo de caso "Portal de Notícias" e defina também os ambientes e frameworks que serão utilizados no desenvolvimento de aplicações móveis.
+| Ambiente                          | Plataforma / Link de Acesso                                                                                                                        |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Repositório de código fonte       | [GitHub](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e3-proj-mov-t4-eventpass.git)                                                         |
+| Documentos do projeto             | [GitHub](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e3-proj-mov-t4-eventpass/tree/main/docs) |
+| Wireframes | [Figma](https://www.figma.com/file/jWIZ78fhtKVCnui7cPgxT6/EventPASS---Eixo-3?type=design&node-id=304-3&mode=design) |
+| Gerenciamento do Projeto          | [GitHub Projects](https://github.com/orgs/ICEI-PUC-Minas-PMV-ADS/projects/823) |
 
 ## Controle de Versão
 
