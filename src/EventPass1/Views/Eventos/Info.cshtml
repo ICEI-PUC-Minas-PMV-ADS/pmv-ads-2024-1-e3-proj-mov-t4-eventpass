@@ -1,0 +1,37 @@
+﻿@model EventPass1.Models.EventoIngressoViewModel
+
+
+@{
+    ViewData["Title"] = "Info";
+}
+<link rel="stylesheet" href="~/css/style-info.css" />
+
+<div class="content-image">
+    <img src="/flyer/@Model.Evento.flyer" class="d-block w-100" alt="..." />
+</div>
+<div class="container-info">
+    <div>
+        <div class="details-info">
+            <p class="name-event">@Model.Evento.NomeEvento</p>
+            <p class="date-event">@Model.Evento.Data.ToString("dd/MM/yyyy") às @Model.Evento.Hora.ToString("HH:mm")</p>
+            <p class="local-event">@Model.Evento.Local</p>
+            <p class="description-event">@Model.Evento.Descricao</p>
+        </div>
+    </div>
+</div>
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="button-retirar" asp-controller="Ingressos" asp-action="Edit" asp-route-id="@Model.Ingresso?.Id"
+            style="border: 1px solid black; color: black; font-weight: bold; border-radius: 5px; padding: 8px;">Retirar ingresso</a>
+    }
+    else
+    {
+        <a asp-controller="Usuarios1" asp-action="Login"
+            style="border: 1px solid black; color: black; font-weight: bold; border-radius: 5px; padding: 8px;"> Retirar</a>
+    }
+
+    <a asp-controller="Home" asp-action="Index" class="button-back">
+        Voltar
+    </a>
+</div>

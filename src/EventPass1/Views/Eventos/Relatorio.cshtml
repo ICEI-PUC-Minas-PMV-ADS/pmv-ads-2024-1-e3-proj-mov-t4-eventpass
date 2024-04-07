@@ -1,0 +1,109 @@
+﻿@model EventPass1.Models.Evento
+
+@{
+    ViewData["Title"] = "Relatorio";
+}
+
+<link rel="stylesheet" href="~/css/style-relatorio.css" />
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <dl class="column info">
+            <h4 class="title" style="color: #000000; font-weight: bold; font-size: x-large;">
+                Informações do evento</h4>
+            <div>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NomeEvento)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NomeEvento)
+                </dd>
+            </div>
+            <div>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Data)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Data)
+                </dd>
+            </div>
+            <div>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Hora)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Hora)
+                </dd>
+            </div>
+            <div>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TotalIngressos)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TotalIngressos)
+                </dd>
+            </div>
+            <div>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Descricao)
+                </dd>
+            </div>
+            <div>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Local)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Local)
+                </dd>
+            </div>
+            <a asp-action="Index"
+                style="border: 1px solid black; color: black; font-weight: bold; border-radius: 5px; padding: 8px;">Voltar</a>
+        </dl>
+    </div>
+
+    <div class="col-md-6 chart title">
+        <h4 style="color: #000000; font-weight: bold; font-size: x-large;">Progresso das reservas
+        </h4>
+        <div>
+            <canvas id="myDoughnutChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctxDoughnut = document.getElementById('myDoughnutChart').getContext('2d');
+        var myDoughnutChart = new Chart(ctxDoughnut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Reservados', 'Disponíveis'],
+                datasets: [{
+                    data: [@ViewBag.Reservados, @ViewBag.Disponiveis],
+                    backgroundColor: [
+                        'rgba(241, 90, 36, 0.6)',
+                        'rgba(0, 0, 0, 0.6)',
+                    ],
+                    borderColor: [
+                        'rgba(241, 90, 36, 1)',
+                        'rgba(0, 0, 0, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutoutPercentage: 50, // Ajuste o tamanho do furo (0 a 100)
+                legend: {
+                    position: 'center',
+                }
+            }
+        });
+    </script>
+}

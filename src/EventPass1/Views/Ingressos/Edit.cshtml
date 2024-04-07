@@ -1,0 +1,32 @@
+﻿@model EventPass1.Models.Ingresso
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<link rel="stylesheet" href="~/css/style-buscar.css" />
+
+<h1 class="title-buscar">Retirar ingresso</h1>
+
+<h4>Você confirma a retirada do ingresso?</h4>
+<form asp-action="Edit">
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group col-md-4">
+            <label asp-for="IdEvento" class="control-label"></label>
+            <select asp-for="IdEvento" class="form-control custom-select" asp-items="ViewBag.IdEvento"></select>
+        </div>
+    </div>
+    <div style="display: flex;">
+        <input type="submit" value="Confirmar" class="button-retirar" />
+        <a class="button-voltar" asp-controller="Home" asp-action="Index">Voltar</a>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
