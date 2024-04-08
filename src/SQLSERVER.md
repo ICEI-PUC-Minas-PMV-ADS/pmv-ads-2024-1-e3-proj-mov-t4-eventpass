@@ -36,3 +36,5 @@ dotnet ef database update
 ```
 dotnet run --environment Development
 ```
+
+teste
