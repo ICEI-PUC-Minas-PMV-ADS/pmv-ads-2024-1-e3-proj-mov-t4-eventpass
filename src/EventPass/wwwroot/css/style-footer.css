@@ -1,0 +1,92 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.colunas-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.footer {
+  background-color: #000;
+  color: #fff;
+  font-size: small;
+  padding: 10px;
+  position: relative;
+  margin-top: auto;
+}
+
+.coluna {
+  flex: 1;
+  padding: 10px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.coluna p {
+  white-space: nowrap;
+}
+
+.coluna img {
+  max-width: 150px;
+  height: auto;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 50px 0 0;
+}
+
+.formulario input {
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px 0 0 5px;
+  border: none;
+  background: rgb(197, 197, 197);
+  font-size: small;
+  height: 35px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formulario button {
+  padding: 5px 10px;
+  background-color: #f15a24;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  max-width: 140px;
+  height: 35px;
+  flex-shrink: 0;
+  color: #000000;
+  font-size: small;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    display: flex;
+    flex-direction: column; /* Altera a direção do flex para coluna em telas menores */
+  }
+
+  .coluna {
+    width: 100%; /* Define a largura das colunas para 100% */
+    margin-bottom: 10px;
+  }
+
+  .img-fluid {
+    text-align: center;
+    max-width: 150px;
+    height: auto;
+  }
+}
