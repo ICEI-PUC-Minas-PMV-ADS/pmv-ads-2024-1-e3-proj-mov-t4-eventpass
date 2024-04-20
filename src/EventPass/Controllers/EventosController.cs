@@ -42,6 +42,16 @@ namespace EventPass.Controllers
             return View(eventos);
         }
 
+        public IActionResult GetTopThreeEvents()
+        {
+            var eventos = _context.Eventos
+                .OrderByDescending(e => e.Data)
+                .Take(3)
+                .ToList();
+
+            return Json(eventos);
+        }
+
         public async Task<IActionResult> Relatorio(int id)
         {
             var dados = await _context.Eventos.FindAsync(id);
@@ -89,7 +99,7 @@ namespace EventPass.Controllers
                 {
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + flyer.FileName;
 
-                    var filePath = Path.Combine("wwwroot/flyer", uniqueFileName);
+                    var filePath = Path.Combine("View/assets/flyer", uniqueFileName);
                     filePath = filePath.Replace("\\", "/");
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
