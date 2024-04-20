@@ -48,6 +48,26 @@ namespace EventPass.Controllers
 
             return View(ingressos1);
         }
+
+        public IActionResult GetMyTickets(int userId)
+        {
+            var ingressos1 = _context.Ingressos
+            .Include(i => i.Evento)
+            .Include(i => i.Usuario)
+            .Where(i => i.IdUsuario == userId && i.Status != 0)
+            .ToList();
+
+            var result = ingressos1.Select(i => new
+            {
+                IdIngresso = i.Id,
+                NomeEvento = i.Evento.NomeEvento,
+                DataEvento = i.Evento.Data,
+                LocalEvento = i.Evento.Local,
+            }).ToList();
+
+            return Json(result);
+        }
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Ingressos == null)
@@ -147,6 +167,23 @@ namespace EventPass.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction("MeusIngressos");
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteIngresso(int id)
+        {
+            var ingresso = _context.Ingressos.Find(id);
+            if (ingresso != null)
+            {
+
+                _context.Ingressos.Remove(ingresso);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
     }
