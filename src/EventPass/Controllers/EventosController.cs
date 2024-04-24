@@ -99,7 +99,7 @@ namespace EventPass.Controllers
                 {
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + flyer.FileName;
 
-                    var filePath = Path.Combine("View/assets/flyer", uniqueFileName);
+                    var filePath = Path.Combine("wwwroot/flyer", uniqueFileName);
                     filePath = filePath.Replace("\\", "/");
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
