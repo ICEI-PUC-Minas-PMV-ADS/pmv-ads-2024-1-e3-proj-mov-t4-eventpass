@@ -1,11 +1,40 @@
 # Plano de Testes de Usabilidade
 
-O teste de usabilidade permite avaliar a qualidade da interface com o usuário da aplicação interativa. O Plano de Testes de Software é gerado a partir da especificação do sistema e consiste em casos de testes que deverão ser executados quando a implementação estiver parcial ou totalmente pronta.
+## 1. Objetivo
 
-As referências abaixo irão auxiliá-lo na geração do artefato "Plano de Testes de Usabilidade".
+Avaliar a usabilidade da aplicação móvel EventPASS, identificando possíveis problemas de interface e fluxo do usuário, e fornecendo sugestões de melhoria para proporcionar uma experiência mais fácil e intuitiva, garantindo a satisfação dos clientes finais.  
 
-> **Links Úteis**:
-> - [Teste De Usabilidade: O Que É e Como Fazer Passo a Passo (neilpatel.com)](https://neilpatel.com/br/blog/teste-de-usabilidade/)
-> - [Teste de usabilidade: tudo o que você precisa saber! | by Jon Vieira | Aela.io | Medium](https://medium.com/aela/teste-de-usabilidade-o-que-voc%C3%AA-precisa-saber-39a36343d9a6/)
-> - [Planejando testes de usabilidade: o que (e o que não) fazer | iMasters](https://imasters.com.br/design-ux/planejando-testes-de-usabilidade-o-que-e-o-que-nao-fazer/)
-> - [Ferramentas de Testes de Usabilidade](https://www.usability.gov/how-to-and-tools/resources/templates.html)
+## 2. Estratégias de Teste
+
+* Teste de Navegação: Avaliar a facilidade de navegação dentro da aplicação. 
+* Teste de Aprendizado: Avaliar a curva de aprendizado para novos usuários. 
+* Teste de Eficiência: Medir o tempo necessário para realizar tarefas comuns. 
+* Teste de Usabilidade: Coletar feedback dos usuários sobre a experiência de uso. 
+* Teste de Satisfação: Obter a opinião dos usuários sobre a satisfação geral com a aplicação.
+
+## 3. Tarefas de Usabilidade
+
+* Realizar o registro como novo usuário na aplicação. 
+* Navegar pela lista de eventos e encontrar um evento de interesse. 
+* Visualizar os detalhes do evento selecionado. 
+* Realizar reserva de ingressos. 
+* Verificar o reserva de ingressos na aplicação.
+
+## 4. Métricas de Avaliação
+
+* Tempo necessário para completar cada tarefa. 
+* Número de erros cometidos durante a execução das tarefas. 
+* Nível de satisfação do usuário com a experiência geral.
+
+## 5. Análise de Resultados
+
+Um questionário para avaliar usabilidade será aplicado e resultados serão analisados, identificando áreas de dificuldade e sugestões de melhoria. As melhorias e correções necessárias para garantir uma melhor experiência do usuário serão avaliadas e priorizadas de acordo com o seu grau de impacto na usabilidade da aplicação. 
+
+## 6. Resposabilidades
+
+* **Equipe de Teste de Usabilidade:** Responsáveis por coletar feedback dos usuários finais e analisar os resultados obtidos. 
+* **Equipe de Desenvolvimento:** Responsável por implementar as alterações recomendadas para melhorar a usabilidade.
+
+## 7. Cronograma
+
+Os testes de usabilidade serão realizados em aproximadamente três dias. A análise dos resultados e a implementação de melhorias e correções ocorrerão nas semanas subsequentes, conforme necessário. 
