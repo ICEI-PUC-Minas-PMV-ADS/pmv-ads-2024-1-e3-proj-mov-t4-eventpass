@@ -11,16 +11,19 @@ using System.IO;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Reflection;
+using EventPass.Services;
 
 namespace EventPass.Controllers
 {
     public class EventosController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly StorageService storageService;
 
-        public EventosController(AppDbContext context, IWebHostEnvironment webHostEnvironment)
+        public EventosController(AppDbContext context, IWebHostEnvironment webHostEnvironment, StorageService storageService)
         {
             _context = context;
+            this.storageService = storageService;
         }
 
         public IActionResult Index()
@@ -97,17 +100,7 @@ namespace EventPass.Controllers
 
                 if (flyer != null && flyer.Length > 0)
                 {
-                    var uniqueFileName = Guid.NewGuid().ToString() + "_" + flyer.FileName;
-
-                    var filePath = Path.Combine("wwwroot/flyer", uniqueFileName);
-                    filePath = filePath.Replace("\\", "/");
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await flyer.CopyToAsync(fileStream);
-                    }
-
-                    evento.flyer = uniqueFileName;
+                    evento.flyer = await storageService.SaveImage(flyer);
                 }
 
                 _context.Eventos.Add(evento);

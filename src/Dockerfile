@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["EventPass/EventPass.csproj", "EventPass/"]
 RUN dotnet restore "EventPass/EventPass.csproj"
+RUN dotnet add package Azure.Storage.Blobs
 COPY . .
 WORKDIR "/src/EventPass"
 RUN dotnet build "EventPass.csproj" -c Release -o /app/build
