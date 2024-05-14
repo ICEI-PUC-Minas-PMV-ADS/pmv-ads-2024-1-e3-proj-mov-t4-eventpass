@@ -1,0 +1,6 @@
+@eventpass_api_HostAddress = http://localhost:5283
+
+GET {{eventpass_api_HostAddress}}/eventos/
+Accept: application/json
+
+###
