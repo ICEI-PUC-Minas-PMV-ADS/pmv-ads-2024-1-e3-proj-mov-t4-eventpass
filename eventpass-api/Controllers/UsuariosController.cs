@@ -2,6 +2,7 @@ using EventPass.Services;
 using EventPass.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EventPass.Controllers
 {
@@ -22,7 +23,7 @@ namespace EventPass.Controllers
             var usuario = service.FindById(id);
             if (usuario == null)
             {
-                throw new Exception(string.Format("Usuário com id {} não foi encontrado", id.ToString()));
+                throw new BadHttpRequestException(string.Format("Usuário com id {0} não foi encontrado", id.ToString()), 404);
             }
             return usuario;
         }
@@ -38,10 +39,9 @@ namespace EventPass.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Usuario usuario)
         {
-            bool updated = service.Update(id, usuario);
-            if (!updated)
+            if (!service.Update(id, usuario))
             {
-                throw new Exception(string.Format("Usuário com id {} não foi encontrado", id.ToString()));
+                throw new BadHttpRequestException(string.Format("Usuário com id {0} não foi encontrado", id.ToString()), 404);
             }
         }
 
@@ -49,10 +49,9 @@ namespace EventPass.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            bool deleted = service.Delete(id);
-            if (!deleted)
+            if (!service.Delete(id))
             {
-                throw new Exception(string.Format("Usuário com id {} não foi encontrado", id.ToString()));
+                throw new BadHttpRequestException(string.Format("Usuário com id {0} não foi encontrado", id.ToString()), 404);
             }
         }
     }

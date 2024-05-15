@@ -40,10 +40,15 @@ public class UsuariosService
 
     public bool Update(int id, Usuario usuario) 
     {
-        var found = appDbContext.Usuarios.Find(id);
+        Usuario found = appDbContext.Usuarios.Find(id);
         if (found != null) 
         {
-            appDbContext.Usuarios.Update(usuario);
+            found.NomeUsuario = usuario.NomeUsuario;
+            found.CPF = usuario.CPF;
+            found.Email = usuario.Email;
+            found.Tipo = usuario.Tipo;
+
+            appDbContext.Usuarios.Update(found);
             appDbContext.SaveChanges();
             return true;
         }
