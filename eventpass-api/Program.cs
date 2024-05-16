@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+});
 builder.Services.AddHealthChecks();
 builder.Services.AddDbContext<EventPass.Models.AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EventPassDatabase")));
 builder.Services.AddScoped<EventosService>();

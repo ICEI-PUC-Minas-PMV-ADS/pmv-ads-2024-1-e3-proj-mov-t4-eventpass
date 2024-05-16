@@ -2,6 +2,9 @@ using EventPass.Models;
 using EventPass.Services;
 using EventPass.Controllers.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EventPass.Controllers
 {
@@ -16,13 +19,14 @@ namespace EventPass.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Obter os principais eventos", Description = "Retorna os principais eventos, com limite opcional de eventos.")]
         public IEnumerable<EventoResponse> GetTop(int? top = 3)
         {
             if (top.HasValue && top.Value > 50)
             {
                 throw new BadHttpRequestException("A quantidade máxima de eventos não pode ultrapassar 50.");
             }
-            
+
             List<Evento> result = service.GetTop(top);
             return result
                 .Select(evento => new EventoResponse()
@@ -41,6 +45,7 @@ namespace EventPass.Controllers
 
         // GET api/<EventosController>/5
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Obter evento por ID", Description = "Retorna um evento específico pelo seu ID.")]
         public EventoResponse Get(int id)
         {
             Evento evento = service.FindById(id);
@@ -64,6 +69,7 @@ namespace EventPass.Controllers
 
         // POST api/<EventosController>
         [HttpPost]
+        [SwaggerOperation(Summary = "Criar um novo evento", Description = "Cria um novo evento com base nos dados fornecidos.")]
         public void Post([FromHeader(Name = "IdUsuario")] int idUsuario, [FromForm] EventoRequest evento)
         {
             Evento entity = new Evento
@@ -85,6 +91,7 @@ namespace EventPass.Controllers
 
         // PUT api/<EventosController>/5
         [HttpPut("{id}")]
+        [SwaggerOperation(Summary = "Atualizar evento por ID", Description = "Atualiza um evento existente com os novos dados fornecidos.")]
         public void Put([FromHeader(Name = "IdUsuario")] int idUsuario, int id, [FromForm] EventoRequest evento)
         {
             Evento entity = new Evento
@@ -106,6 +113,7 @@ namespace EventPass.Controllers
 
         // DELETE api/<EventosController>/5
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Excluir evento por ID", Description = "Exclui um evento específico pelo seu ID.")]
         public void Delete([FromHeader(Name = "IdUsuario")] int idUsuario, int id)
         {
             if (!service.Delete(idUsuario, id))
