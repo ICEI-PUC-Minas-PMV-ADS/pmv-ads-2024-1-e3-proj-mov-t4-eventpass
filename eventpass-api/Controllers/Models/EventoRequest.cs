@@ -8,7 +8,5 @@ public class EventoRequest
     public int TotalIngressos { get; set; }
     public string Descricao { get; set; }
     public string Local { get; set; }
-    public int GestorId { get; set; }
-    public string Flyer { get; set; }
-    public int UsuarioId { get; set; }
+    public IFormFile Flyer { get; set; }
 }

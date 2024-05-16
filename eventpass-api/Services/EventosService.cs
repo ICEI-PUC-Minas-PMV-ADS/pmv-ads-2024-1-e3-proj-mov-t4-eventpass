@@ -24,29 +24,14 @@ public class EventosService
         return appDbContext.Eventos.Find(id);
     }
 
-    public void Create(Evento evento) 
+    public bool Create(int idUsuario, Evento evento)
     {
-        appDbContext.Eventos.Add(evento);
-        appDbContext.SaveChanges();
-    }
-
-    public bool Update(int id, Evento evento) 
-    {
-        Evento found = appDbContext.Eventos.Find(id);
-        if (found != null) 
+        Usuario? gestor = appDbContext.Usuarios.Find(idUsuario);
+        if (gestor != null)
         {
-            found.NomeEvento = evento.NomeEvento;
-            found.Data = evento.Data;
-            found.Hora = evento.Hora;
-            found.Descricao = evento.Descricao;
-            found.TotalIngressos = evento.TotalIngressos;
-            found.Local = evento.Local;
-            found.GestorId = evento.GestorId;
-            found.flyer = evento.flyer;
-            found.Usuario = evento.Usuario;
-            found.Ingressos = evento.Ingressos;
-
-            appDbContext.Eventos.Update(found);
+            evento.GestorId = idUsuario;
+            evento.Ingressos = [];
+            appDbContext.Eventos.Add(evento);
             appDbContext.SaveChanges();
             return true;
         }
@@ -56,12 +41,35 @@ public class EventosService
         }
     }
 
-    public bool Delete(int id) 
+    public bool Update(int idUsuario, int id, Evento evento) 
     {
-        var evento = appDbContext.Eventos.Find(id);
-        if (evento != null) 
+        Evento? eventoExistente = appDbContext.Eventos.Find(id);
+        if (eventoExistente != null && eventoExistente.GestorId == idUsuario) 
         {
-            appDbContext.Eventos.Remove(evento);
+            eventoExistente.NomeEvento = evento.NomeEvento;
+            eventoExistente.Data = evento.Data;
+            eventoExistente.Hora = evento.Hora;
+            eventoExistente.Descricao = evento.Descricao;
+            eventoExistente.TotalIngressos = evento.TotalIngressos;
+            eventoExistente.Local = evento.Local;
+            eventoExistente.flyer = evento.flyer;
+
+            appDbContext.Eventos.Update(eventoExistente);
+            appDbContext.SaveChanges();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool Delete(int idUsuario, int id) 
+    {
+        Evento? eventoExistente = appDbContext.Eventos.Find(id);
+        if (eventoExistente != null && eventoExistente.GestorId == idUsuario) 
+        {
+            appDbContext.Eventos.Remove(eventoExistente);
             appDbContext.SaveChanges();
             return true;
         }
