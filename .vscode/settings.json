@@ -1,0 +1,5 @@
+{
+  "appService.preDeployTask": "publish-release",
+  "appService.deploySubpath": "eventpass-api/bin/Release/net8.0/publish",
+  "appService.defaultWebAppToDeploy": "/subscriptions/9420e9d8-f83e-44d0-8d5e-e7656ce98d61/resourceGroups/eventpass/providers/Microsoft.Web/sites/eventpass-api"
+}
