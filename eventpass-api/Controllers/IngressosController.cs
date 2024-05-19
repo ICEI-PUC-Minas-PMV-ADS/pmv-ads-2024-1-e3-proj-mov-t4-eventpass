@@ -2,6 +2,7 @@ using EventPass.Controllers.Models;
 using EventPass.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace EventPass.Controllers
 {
@@ -17,10 +18,13 @@ namespace EventPass.Controllers
 
         // GET: api/<IngressosController>
         [HttpGet]
+        [SwaggerOperation(Summary = "Obter os ingressos por usuário")]
+
         public IEnumerable<IngressoResponse> GetByIdUsuario([FromHeader(Name = "IdUsuario")] int idUsuario)
         {
             var ingressos = ingressosService.FindByIdUsuario(idUsuario);
-            return ingressos.Select(ingresso => new IngressoResponse {
+            return ingressos.Select(ingresso => new IngressoResponse
+            {
                 IdIngresso = ingresso.Id,
                 IdEvento = ingresso.IdEvento,
                 IdUsuario = ingresso.IdUsuario,
@@ -31,6 +35,8 @@ namespace EventPass.Controllers
 
         // DELETE api/<IngressosController>/5
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Deleta os ingressos por usuário")]
+
         public void Delete([FromHeader(Name = "IdUsuario")] int idUsuario, int id)
         {
             if (!ingressosService.Delete(idUsuario, id))

@@ -3,6 +3,7 @@ using EventPass.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace EventPass.Controllers
 {
@@ -18,6 +19,8 @@ namespace EventPass.Controllers
 
         // GET api/<UsuariosController>/5
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Obter o usuário por id")]
+
         public Usuario Get(int id)
         {
             var usuario = service.FindById(id);
@@ -30,6 +33,7 @@ namespace EventPass.Controllers
 
         // POST api/<UsuariosController>
         [HttpPost]
+        [SwaggerOperation(Summary = "Cria um novo usuário")]
         public void Post([FromBody] Usuario usuario)
         {
             service.Create(usuario);
@@ -37,6 +41,7 @@ namespace EventPass.Controllers
 
         // PUT api/<UsuariosController>/5
         [HttpPut("{id}")]
+        [SwaggerOperation(Summary = "Atualiza um usuário")]
         public void Put(int id, [FromBody] Usuario usuario)
         {
             if (!service.Update(id, usuario))
@@ -47,6 +52,7 @@ namespace EventPass.Controllers
 
         // DELETE api/<UsuariosController>/5
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Deleta um usuário")]
         public void Delete(int id)
         {
             if (!service.Delete(id))
