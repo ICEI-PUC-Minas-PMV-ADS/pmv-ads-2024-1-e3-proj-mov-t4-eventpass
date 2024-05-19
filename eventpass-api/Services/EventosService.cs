@@ -5,31 +5,46 @@ namespace EventPass.Services;
 public class EventosService
 {
     private readonly AppDbContext appDbContext;
+    private readonly StorageService storageService;
 
-    public EventosService(AppDbContext appDbContext)
+    public EventosService(AppDbContext appDbContext, StorageService storageService)
     {
         this.appDbContext = appDbContext;
+        this.storageService = storageService;
     }
 
     public List<Evento> GetTop(int? top)
     {
-        return appDbContext.Eventos
-            .OrderByDescending(e => e.Data)
-            .Take(top ?? 3)
-            .ToList();
+        var eventos = appDbContext.Eventos
+            .OrderByDescending(e => e.DataHora)
+            .Take(top ?? 3);
+
+        foreach (Evento? evento in eventos)
+        {
+            evento.flyer = storageService.GetFileImageStorageUrl(evento.flyer);
+        }
+
+        return eventos.ToList();
     }
 
-    public Evento FindById(int id)
+    public Evento? FindById(int id)
     {
+        Evento? evento = appDbContext.Eventos.Find(id);
+        if (evento != null) 
+        {
+            evento.flyer = storageService.GetFileImageStorageUrl(evento.flyer);
+        }
         return appDbContext.Eventos.Find(id);
     }
 
-    public bool Create(int idUsuario, Evento evento)
+    public bool Create(int idUsuario, Evento evento, IFormFile flyer)
     {
         Usuario? gestor = appDbContext.Usuarios.Find(idUsuario);
         if (gestor != null)
         {
+            var fileName = storageService.SaveImage(flyer);
             evento.GestorId = idUsuario;
+            evento.flyer = fileName;
             evento.Ingressos = [];
             appDbContext.Eventos.Add(evento);
             appDbContext.SaveChanges();
@@ -41,18 +56,22 @@ public class EventosService
         }
     }
 
-    public bool Update(int idUsuario, int id, Evento evento) 
+    public bool Update(int idUsuario, int id, Evento evento, IFormFile flyer) 
     {
         Evento? eventoExistente = appDbContext.Eventos.Find(id);
-        if (eventoExistente != null && eventoExistente.GestorId == idUsuario) 
+        if (eventoExistente != null && eventoExistente.GestorId == idUsuario)
         {
             eventoExistente.NomeEvento = evento.NomeEvento;
-            eventoExistente.Data = evento.Data;
-            eventoExistente.Hora = evento.Hora;
+            eventoExistente.DataHora = evento.DataHora;
             eventoExistente.Descricao = evento.Descricao;
             eventoExistente.TotalIngressos = evento.TotalIngressos;
             eventoExistente.Local = evento.Local;
-            eventoExistente.flyer = evento.flyer;
+
+            if (flyer != null) 
+            {
+                var fileName = storageService.SaveImage(flyer);
+                eventoExistente.flyer = fileName;
+            }
 
             appDbContext.Eventos.Update(eventoExistente);
             appDbContext.SaveChanges();

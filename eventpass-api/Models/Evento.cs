@@ -4,8 +4,7 @@ public class Evento
 {
     public int IdEvento { get; set; }
     public string NomeEvento { get; set; }
-    public DateTime Data { get; set; }
-    public DateTime Hora { get; set; }
+    public DateTime DataHora { get; set; }
     public int TotalIngressos { get; set; }
     public string Descricao { get; set; }
     public string Local { get; set; }

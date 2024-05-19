@@ -16,6 +16,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddDbContext<EventPass.Models.AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EventPassDatabase")));
 builder.Services.AddScoped<EventosService>();
 builder.Services.AddScoped<UsuariosService>();
+builder.Services.AddScoped<StorageService>();
 
 var app = builder.Build();
 

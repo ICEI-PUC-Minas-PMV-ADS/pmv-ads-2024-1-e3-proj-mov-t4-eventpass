@@ -33,8 +33,7 @@ namespace EventPass.Controllers
                 {
                     Id = evento.IdEvento,
                     Nome = evento.NomeEvento,
-                    Data = evento.Data,
-                    Hora = evento.Hora,
+                    DataHora = evento.DataHora,
                     Descricao = evento.Descricao,
                     TotalIngressos = evento.TotalIngressos,
                     Local = evento.Local,
@@ -48,7 +47,7 @@ namespace EventPass.Controllers
         [SwaggerOperation(Summary = "Obter evento por ID", Description = "Retorna um evento específico pelo seu ID.")]
         public EventoResponse Get(int id)
         {
-            Evento evento = service.FindById(id);
+            Evento? evento = service.FindById(id);
             if (evento == null)
             {
                 throw new BadHttpRequestException(string.Format("Evento com id {0} não foi encontrado", id.ToString()), 404);
@@ -58,8 +57,7 @@ namespace EventPass.Controllers
             {
                 Id = evento.IdEvento,
                 Nome = evento.NomeEvento,
-                Data = evento.Data,
-                Hora = evento.Hora,
+                DataHora = evento.DataHora,
                 Descricao = evento.Descricao,
                 TotalIngressos = evento.TotalIngressos,
                 Local = evento.Local,
@@ -70,23 +68,23 @@ namespace EventPass.Controllers
         // POST api/<EventosController>
         [HttpPost]
         [SwaggerOperation(Summary = "Criar um novo evento", Description = "Cria um novo evento com base nos dados fornecidos.")]
-        public void Post([FromHeader(Name = "IdUsuario")] int idUsuario, [FromForm] EventoRequest evento)
+        public IActionResult Post([FromHeader(Name = "IdUsuario")] int idUsuario, [FromForm] EventoRequest evento)
         {
             Evento entity = new Evento
             {
                 NomeEvento = evento.Nome,
-                Data = evento.Data,
-                Hora = evento.Hora,
+                DataHora = evento.DataHora,
                 Descricao = evento.Descricao,
                 TotalIngressos = evento.TotalIngressos,
-                Local = evento.Local,
-                flyer = evento.Flyer.FileName
+                Local = evento.Local
             };
 
-            if (!service.Create(idUsuario, entity))
+            if (!service.Create(idUsuario, entity, evento.Flyer))
             {
                 throw new BadHttpRequestException(string.Format("Usuário com ID {0} não foi encontrado para ser gestor do evento.", idUsuario.ToString()), 404);
             }
+
+            return Created();
         }
 
         // PUT api/<EventosController>/5
@@ -97,15 +95,14 @@ namespace EventPass.Controllers
             Evento entity = new Evento
             {
                 NomeEvento = evento.Nome,
-                Data = evento.Data,
-                Hora = evento.Hora,
+                DataHora = evento.DataHora,
                 Descricao = evento.Descricao,
                 TotalIngressos = evento.TotalIngressos,
                 Local = evento.Local,
                 flyer = evento.Flyer.FileName
             };
 
-            if (!service.Update(idUsuario, id, entity))
+            if (!service.Update(idUsuario, id, entity, evento.Flyer))
             {
                 throw new BadHttpRequestException(string.Format("Evento com ID {0} não foi encontrado ou não pertence ao usuário {1}.", id.ToString(), idUsuario.ToString()), 404);
             }
