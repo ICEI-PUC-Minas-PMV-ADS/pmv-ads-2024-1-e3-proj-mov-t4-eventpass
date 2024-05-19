@@ -17,6 +17,7 @@ builder.Services.AddDbContext<EventPass.Models.AppDbContext>(options => options.
 builder.Services.AddScoped<EventosService>();
 builder.Services.AddScoped<UsuariosService>();
 builder.Services.AddScoped<StorageService>();
+builder.Services.AddScoped<IngressosService>();
 
 var app = builder.Build();
 

@@ -1,100 +1,123 @@
 ﻿using EventPass.Models;
 
-namespace EventPass.Services;
-
-public class EventosService
+namespace EventPass.Services
 {
-    private readonly AppDbContext appDbContext;
-    private readonly StorageService storageService;
-
-    public EventosService(AppDbContext appDbContext, StorageService storageService)
+    public class EventosService
     {
-        this.appDbContext = appDbContext;
-        this.storageService = storageService;
-    }
+        private const int QUANTIDADE_MAXIMA_INGRESSOS_EVENTO = 3;
+        private readonly AppDbContext appDbContext;
+        private readonly StorageService storageService;
+        private readonly IngressosService ingressosService;
 
-    public List<Evento> GetTop(int? top)
-    {
-        var eventos = appDbContext.Eventos
-            .OrderByDescending(e => e.DataHora)
-            .Take(top ?? 3);
-
-        foreach (Evento? evento in eventos)
+        public EventosService(AppDbContext appDbContext, StorageService storageService, IngressosService ingressosService)
         {
-            evento.flyer = storageService.GetFileImageStorageUrl(evento.flyer);
+            this.appDbContext = appDbContext;
+            this.storageService = storageService;
+            this.ingressosService = ingressosService;
         }
 
-        return eventos.ToList();
-    }
-
-    public Evento? FindById(int id)
-    {
-        Evento? evento = appDbContext.Eventos.Find(id);
-        if (evento != null) 
+        public List<Evento> GetTop(int? top)
         {
-            evento.flyer = storageService.GetFileImageStorageUrl(evento.flyer);
-        }
-        return appDbContext.Eventos.Find(id);
-    }
+            var eventos = appDbContext.Eventos
+                .OrderByDescending(e => e.DataHora)
+                .Take(top ?? 3);
 
-    public bool Create(int idUsuario, Evento evento, IFormFile flyer)
-    {
-        Usuario? gestor = appDbContext.Usuarios.Find(idUsuario);
-        if (gestor != null)
-        {
-            var fileName = storageService.SaveImage(flyer);
-            evento.GestorId = idUsuario;
-            evento.flyer = fileName;
-            evento.Ingressos = [];
-            appDbContext.Eventos.Add(evento);
-            appDbContext.SaveChanges();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public bool Update(int idUsuario, int id, Evento evento, IFormFile flyer) 
-    {
-        Evento? eventoExistente = appDbContext.Eventos.Find(id);
-        if (eventoExistente != null && eventoExistente.GestorId == idUsuario)
-        {
-            eventoExistente.NomeEvento = evento.NomeEvento;
-            eventoExistente.DataHora = evento.DataHora;
-            eventoExistente.Descricao = evento.Descricao;
-            eventoExistente.TotalIngressos = evento.TotalIngressos;
-            eventoExistente.Local = evento.Local;
-
-            if (flyer != null) 
+            foreach (Evento? evento in eventos)
             {
-                var fileName = storageService.SaveImage(flyer);
-                eventoExistente.flyer = fileName;
+                evento.Flyer = storageService.GetFileImageStorageUrl(evento.Flyer);
             }
 
-            appDbContext.Eventos.Update(eventoExistente);
-            appDbContext.SaveChanges();
-            return true;
+            return eventos.ToList();
         }
-        else
-        {
-            return false;
-        }
-    }
 
-    public bool Delete(int idUsuario, int id) 
-    {
-        Evento? eventoExistente = appDbContext.Eventos.Find(id);
-        if (eventoExistente != null && eventoExistente.GestorId == idUsuario) 
+        public Evento? FindById(int id)
         {
-            appDbContext.Eventos.Remove(eventoExistente);
-            appDbContext.SaveChanges();
-            return true;
+            Evento? evento = appDbContext.Eventos.Find(id);
+            if (evento != null)
+            {
+                evento.Flyer = storageService.GetFileImageStorageUrl(evento.Flyer);
+            }
+            return appDbContext.Eventos.Find(id);
         }
-        else
+
+        public bool Create(int idUsuario, Evento evento, IFormFile Flyer)
         {
-            return false;
+            Usuario? gestor = appDbContext.Usuarios.Find(idUsuario);
+            if (gestor != null)
+            {
+                var fileName = storageService.SaveImage(Flyer);
+                evento.GestorId = idUsuario;
+                evento.Flyer = fileName;
+                evento.Ingressos = [];
+                appDbContext.Eventos.Add(evento);
+                appDbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Update(int idUsuario, int id, Evento evento, IFormFile Flyer)
+        {
+            Evento? eventoExistente = appDbContext.Eventos.Find(id);
+            if (eventoExistente != null && eventoExistente.GestorId == idUsuario)
+            {
+                eventoExistente.NomeEvento = evento.NomeEvento;
+                eventoExistente.DataHora = evento.DataHora;
+                eventoExistente.Descricao = evento.Descricao;
+                eventoExistente.TotalIngressos = evento.TotalIngressos;
+                eventoExistente.Local = evento.Local;
+
+                if (Flyer != null)
+                {
+                    var fileName = storageService.SaveImage(Flyer);
+                    eventoExistente.Flyer = fileName;
+                }
+
+                appDbContext.Eventos.Update(eventoExistente);
+                appDbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Delete(int idUsuario, int id)
+        {
+            Evento? eventoExistente = appDbContext.Eventos.Find(id);
+            if (eventoExistente != null && eventoExistente.GestorId == idUsuario)
+            {
+                appDbContext.Eventos.Remove(eventoExistente);
+                appDbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool RetirarIngresso(int id, int idUsuario)
+        {
+            Evento? evento = appDbContext.Eventos.Find(id);
+            int quantidadeIngressosEvento = ingressosService.CountByIdEvento(id);
+            int quantidadeIngressosUsuarioEvento = ingressosService.CountByIdEvento(id, idUsuario);
+
+            if (evento != null 
+                && quantidadeIngressosUsuarioEvento < QUANTIDADE_MAXIMA_INGRESSOS_EVENTO
+                && quantidadeIngressosEvento < evento.TotalIngressos)
+            {
+                ingressosService.Create(id, idUsuario);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

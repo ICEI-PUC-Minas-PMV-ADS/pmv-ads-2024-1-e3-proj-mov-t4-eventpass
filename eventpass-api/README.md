@@ -26,6 +26,7 @@ TODO
 ## Configurações do ambiente
 
 ```
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-
+dotnet restore
+dotnet ef database update
+dotnet run --environment Development
 ```

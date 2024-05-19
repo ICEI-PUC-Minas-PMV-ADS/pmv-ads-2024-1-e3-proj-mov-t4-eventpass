@@ -3,8 +3,6 @@ using EventPass.Services;
 using EventPass.Controllers.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace EventPass.Controllers
 {
@@ -37,7 +35,7 @@ namespace EventPass.Controllers
                     Descricao = evento.Descricao,
                     TotalIngressos = evento.TotalIngressos,
                     Local = evento.Local,
-                    Flyer = evento.flyer
+                    Flyer = evento.Flyer
                 })
                 .ToList();
         }
@@ -61,7 +59,7 @@ namespace EventPass.Controllers
                 Descricao = evento.Descricao,
                 TotalIngressos = evento.TotalIngressos,
                 Local = evento.Local,
-                Flyer = evento.flyer
+                Flyer = evento.Flyer
             };
         }
 
@@ -99,7 +97,7 @@ namespace EventPass.Controllers
                 Descricao = evento.Descricao,
                 TotalIngressos = evento.TotalIngressos,
                 Local = evento.Local,
-                flyer = evento.Flyer.FileName
+                Flyer = evento.Flyer.FileName
             };
 
             if (!service.Update(idUsuario, id, entity, evento.Flyer))
@@ -116,6 +114,16 @@ namespace EventPass.Controllers
             if (!service.Delete(idUsuario, id))
             {
                 throw new BadHttpRequestException(string.Format("Evento com ID {0} não foi encontrado ou não pertence ao usuário {1}.", id.ToString(), idUsuario.ToString()), 404);
+            }
+        }
+
+        [HttpPost("{id}/retirar-ingresso")]
+        [SwaggerOperation(Summary = "Retira ingresso para um evento")]
+        public void RetirarIngresso([FromHeader(Name = "IdUsuario")] int idUsuario, int id)
+        {
+            if(!service.RetirarIngresso(id, idUsuario))
+            {
+                throw new BadHttpRequestException(string.Format("Não foi possível retirar ingresssos para o evento ID {0} e usuário ID {1}. Limite de ingressos excedido.", id.ToString(), idUsuario.ToString()), 400);
             }
         }
     }

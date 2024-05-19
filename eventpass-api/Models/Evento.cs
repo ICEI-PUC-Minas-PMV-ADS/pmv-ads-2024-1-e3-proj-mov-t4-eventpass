@@ -9,7 +9,7 @@ public class Evento
     public string Descricao { get; set; }
     public string Local { get; set; }
     public int GestorId { get; set; }
-    public string flyer { get; set; }
+    public string Flyer { get; set; }
     public Usuario Usuario { get; set; }
     public ICollection<Ingresso> Ingressos { get; set; }
 }
