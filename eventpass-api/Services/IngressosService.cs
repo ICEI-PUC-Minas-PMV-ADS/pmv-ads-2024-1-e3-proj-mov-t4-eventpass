@@ -1,4 +1,5 @@
 ﻿using EventPass.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EventPass.Services
 {
@@ -58,15 +59,17 @@ namespace EventPass.Services
                 .Count();
         }
 
-        public void Create(int idEvento, int idUsuario)
+        public Ingresso Create(int idEvento, int idUsuario)
         {
             Ingresso ingresso = new Ingresso
             {
                 IdEvento = idEvento,
                 IdUsuario = idUsuario
             };
-            appDbContext.Ingressos.Add(ingresso);
+            
+            EntityEntry<Ingresso> created = appDbContext.Ingressos.Add(ingresso);
             appDbContext.SaveChanges();
+            return created.Entity;
         }
     }
 }

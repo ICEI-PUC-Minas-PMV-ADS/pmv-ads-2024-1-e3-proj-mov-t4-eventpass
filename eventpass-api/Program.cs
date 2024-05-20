@@ -18,6 +18,7 @@ builder.Services.AddScoped<EventosService>();
 builder.Services.AddScoped<UsuariosService>();
 builder.Services.AddScoped<StorageService>();
 builder.Services.AddScoped<IngressosService>();
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 
