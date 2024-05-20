@@ -8,12 +8,16 @@ namespace EventPass.Services
         private readonly AppDbContext appDbContext;
         private readonly StorageService storageService;
         private readonly IngressosService ingressosService;
+        private readonly EmailService emailService;
+        private readonly UsuariosService usuariosService;
 
-        public EventosService(AppDbContext appDbContext, StorageService storageService, IngressosService ingressosService)
+        public EventosService(AppDbContext appDbContext, StorageService storageService, IngressosService ingressosService, EmailService emailService, UsuariosService usuariosService)
         {
             this.appDbContext = appDbContext;
             this.storageService = storageService;
             this.ingressosService = ingressosService;
+            this.emailService = emailService;
+            this.usuariosService = usuariosService;
         }
 
         public List<Evento> GetTop(int? top)
@@ -104,14 +108,17 @@ namespace EventPass.Services
         public bool RetirarIngresso(int id, int idUsuario)
         {
             Evento? evento = appDbContext.Eventos.Find(id);
+            Usuario? usuario = usuariosService.FindById(idUsuario);
             int quantidadeIngressosEvento = ingressosService.CountByIdEvento(id);
             int quantidadeIngressosUsuarioEvento = ingressosService.CountByIdEvento(id, idUsuario);
 
-            if (evento != null 
+            if (evento != null
+                && usuario != null
                 && quantidadeIngressosUsuarioEvento < QUANTIDADE_MAXIMA_INGRESSOS_EVENTO
                 && quantidadeIngressosEvento < evento.TotalIngressos)
             {
-                ingressosService.Create(id, idUsuario);
+                Ingresso ingresso = ingressosService.Create(id, idUsuario);
+                emailService.EnviarEmailConfirmacaoReserva(usuario.Email, ingresso.Id, evento.NomeEvento, usuario.NomeUsuario);
                 return true;
             }
             else
