@@ -40,6 +40,25 @@ namespace EventPass.Controllers
                 .ToList();
         }
 
+        [HttpGet("buscar")]
+        [SwaggerOperation(Summary ="Busca de eventos")]
+        public IEnumerable<EventoResponse> BuscarEventos(string query)
+        {
+            List<Evento> result = service.BuscarEventos(query);
+            return result
+                .Select(evento => new EventoResponse()
+                {
+                    Id = evento.IdEvento,
+                    Nome = evento.NomeEvento,
+                    DataHora = evento.DataHora,
+                    Descricao = evento.Descricao,
+                    TotalIngressos = evento.TotalIngressos,
+                    Local = evento.Local,
+                    Flyer = evento.Flyer
+                })
+                .ToList();
+        }
+
         // GET api/<EventosController>/5
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Obter evento por ID", Description = "Retorna um evento específico pelo seu ID.")]
