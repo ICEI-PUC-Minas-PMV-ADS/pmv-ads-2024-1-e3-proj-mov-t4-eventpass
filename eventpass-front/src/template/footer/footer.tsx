@@ -2,10 +2,29 @@ import * as React from 'react'
 import HomePage from '../../pages/home'
 import Buscar from '../../pages/buscar'
 import Profile from '../../pages/profile'
+import DetailPage from '../../pages/detalhes'
+
 import { BottomNavigation } from 'react-native-paper'
+import { createStackNavigator } from '@react-navigation/stack'
 
-const HomeRoute = () => <HomePage />
+const Stack = createStackNavigator()
 
+const HomeRoute = () => {
+  const shouldRenderStack = true
+
+  return shouldRenderStack ? (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Home" component={HomePage} />
+      <Stack.Screen name="Detail" component={DetailPage} />
+    </Stack.Navigator>
+  ) : (
+    <HomePage />
+  )
+}
 const SearchRoute = () => <Buscar />
 
 const ProfileRoute = () => <Profile />
