@@ -34,6 +34,21 @@ namespace EventPass.Services
             return eventos.ToList();
         }
 
+        public List<Evento> BuscarEventos(string query)
+        {
+            var eventos = appDbContext.Eventos
+                .Where(e => e.NomeEvento.ToUpper().Contains(query.ToUpper()) || e.Descricao.ToUpper().Contains(query.ToUpper()))
+                .OrderByDescending(e => e.DataHora)
+                .Take(10);
+            
+            foreach (Evento? evento in eventos)
+            {
+                evento.Flyer = storageService.GetFileImageStorageUrl(evento.Flyer);
+            }
+
+            return eventos.ToList();
+        }
+
         public Evento? FindById(int id)
         {
             Evento? evento = appDbContext.Eventos.Find(id);
