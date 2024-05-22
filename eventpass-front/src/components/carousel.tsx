@@ -3,8 +3,18 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import { TouchableRipple } from 'react-native-paper'
 import api from '../services/api'
 import { Evento } from '../interfaces/eventos'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+type RootStackParamList = {
+  Home: undefined
+  Detail: undefined
+}
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>
 
 const CarouselHome: React.FC = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>()
   const [eventos, setEventos] = useState<Evento[]>([])
 
   useEffect(() => {
@@ -19,8 +29,8 @@ const CarouselHome: React.FC = () => {
     getEventosData()
   }, [])
 
-  const handlePress = () => {
-    console.log('Pressed')
+  const handlePress = (evento: number) => {
+    return navigation.navigate('Detail', { idEvento: evento })
   }
 
   return (
@@ -35,12 +45,12 @@ const CarouselHome: React.FC = () => {
           />
           <View style={styles.childCarousel}>
             <Text style={styles.title}>{item.dataHora}</Text>
-            <TouchableRipple onPress={handlePress}>
+            <TouchableRipple onPress={() => handlePress(item?.id)}>
               <Text style={styles.title}>Ver detalhes</Text>
             </TouchableRipple>
           </View>
           <View style={styles.body}>
-            <TouchableRipple onPress={handlePress}>
+            <TouchableRipple onPress={() => handlePress(item?.id)}>
               <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
                 {item.nome}
               </Text>
