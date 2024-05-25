@@ -1,12 +1,15 @@
 using EventPass.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -19,6 +22,25 @@ builder.Services.AddScoped<UsuariosService>();
 builder.Services.AddScoped<StorageService>();
 builder.Services.AddScoped<IngressosService>();
 builder.Services.AddScoped<EmailService>();
+//Jwt configuration starts here
+var jwtIssuer = builder.Configuration.GetSection("ApplicationSettings:Issuer").Get<string>();
+var jwtKey = builder.Configuration.GetSection("ApplicationSettings:JwtSecret").Get<string>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+ .AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = jwtIssuer,
+         ValidAudience = jwtIssuer,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+     };
+ });
+//Jwt configuration ends here
 
 var app = builder.Build();
 
@@ -29,6 +51,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging() || app.Enviro
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 
 app.UseHttpsRedirection();
 

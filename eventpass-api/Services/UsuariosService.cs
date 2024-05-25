@@ -25,7 +25,7 @@ namespace EventPass.Services
 
         public bool Delete(int id)
         {
-            var usuario = appDbContext.Usuarios.Find(id);
+            Usuario? usuario = appDbContext.Usuarios.Find(id);
             if (usuario != null)
             {
                 appDbContext.Usuarios.Remove(usuario);
@@ -40,12 +40,14 @@ namespace EventPass.Services
 
         public bool Update(int id, Usuario usuario)
         {
-            Usuario found = appDbContext.Usuarios.Find(id);
+            Usuario? found = appDbContext.Usuarios.Find(id);
             if (found != null)
             {
                 found.NomeUsuario = usuario.NomeUsuario;
                 found.CPF = usuario.CPF;
                 found.Email = usuario.Email;
+                found.Senha = usuario.Senha;
+                found.ConfirmarSenha = usuario.ConfirmarSenha;
                 found.Tipo = usuario.Tipo;
 
                 appDbContext.Usuarios.Update(found);
@@ -56,6 +58,21 @@ namespace EventPass.Services
             {
                 return false;
             }
+        }
+
+        public Usuario? AuthenticateUser(string username, string password)
+        {
+            Usuario? found = appDbContext.Usuarios.Where(u => u.Email == username).FirstOrDefault();
+            if (found != null)
+            {
+                // Verificar com senha criptografada
+                if(found.Senha == password)
+                {
+                    return found;
+                }
+            }
+            
+            return null;
         }
     }
 
