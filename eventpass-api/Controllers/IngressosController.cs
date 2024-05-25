@@ -1,5 +1,6 @@
 using EventPass.Controllers.Models;
 using EventPass.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -18,10 +19,12 @@ namespace EventPass.Controllers
 
         // GET: api/<IngressosController>
         [HttpGet]
+        [Authorize]
         [SwaggerOperation(Summary = "Obter os ingressos por usuário")]
-
-        public IEnumerable<IngressoResponse> GetByIdUsuario([FromHeader(Name = "IdUsuario")] int idUsuario)
+        public IEnumerable<IngressoResponse> GetByIdUsuario()
         {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
             var ingressos = ingressosService.FindByIdUsuario(idUsuario);
             return ingressos.Select(ingresso => new IngressoResponse
             {
@@ -35,10 +38,12 @@ namespace EventPass.Controllers
 
         // DELETE api/<IngressosController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         [SwaggerOperation(Summary = "Deleta os ingressos por usuário")]
-
-        public void Delete([FromHeader(Name = "IdUsuario")] int idUsuario, int id)
+        public void Delete(int id)
         {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
             if (!ingressosService.Delete(idUsuario, id))
             {
                 throw new BadHttpRequestException(string.Format("Ingresso com ID {0} não foi encontrado ou não pertence ao usuário {1}.", id.ToString(), idUsuario.ToString()), 404);

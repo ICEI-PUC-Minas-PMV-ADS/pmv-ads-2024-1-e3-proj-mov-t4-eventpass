@@ -2,6 +2,7 @@ using EventPass.Models;
 using EventPass.Services;
 using EventPass.Controllers.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace EventPass.Controllers
@@ -82,11 +83,36 @@ namespace EventPass.Controllers
             };
         }
 
+        [HttpGet("meus-eventos")]
+        [Authorize]
+        [SwaggerOperation(Summary = "Obtém os eventos do usuário autenticado.")]
+        public IEnumerable<EventoResponse> GetEventosByUsuario()
+        {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
+            List<Evento> result = service.FindByIdUsuario(idUsuario);
+            return result
+                .Select(evento => new EventoResponse()
+                {
+                    Id = evento.IdEvento,
+                    Nome = evento.NomeEvento,
+                    DataHora = evento.DataHora,
+                    Descricao = evento.Descricao,
+                    TotalIngressos = evento.TotalIngressos,
+                    Local = evento.Local,
+                    Flyer = evento.Flyer
+                })
+                .ToList();
+        }
+
         // POST api/<EventosController>
         [HttpPost]
+        [Authorize]
         [SwaggerOperation(Summary = "Criar um novo evento", Description = "Cria um novo evento com base nos dados fornecidos.")]
-        public IActionResult Post([FromHeader(Name = "IdUsuario")] int idUsuario, [FromForm] EventoRequest evento)
+        public IActionResult Post([FromForm] EventoRequest evento)
         {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
             Evento entity = new Evento
             {
                 NomeEvento = evento.Nome,
@@ -106,9 +132,12 @@ namespace EventPass.Controllers
 
         // PUT api/<EventosController>/5
         [HttpPut("{id}")]
+        [Authorize]
         [SwaggerOperation(Summary = "Atualizar evento por ID", Description = "Atualiza um evento existente com os novos dados fornecidos.")]
-        public void Put([FromHeader(Name = "IdUsuario")] int idUsuario, int id, [FromForm] EventoRequest evento)
+        public void Put(int id, [FromForm] EventoRequest evento)
         {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
             Evento entity = new Evento
             {
                 NomeEvento = evento.Nome,
@@ -127,9 +156,12 @@ namespace EventPass.Controllers
 
         // DELETE api/<EventosController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         [SwaggerOperation(Summary = "Excluir evento por ID", Description = "Exclui um evento específico pelo seu ID.")]
-        public void Delete([FromHeader(Name = "IdUsuario")] int idUsuario, int id)
+        public void Delete(int id)
         {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
             if (!service.Delete(idUsuario, id))
             {
                 throw new BadHttpRequestException(string.Format("Evento com ID {0} não foi encontrado ou não pertence ao usuário {1}.", id.ToString(), idUsuario.ToString()), 404);
@@ -137,9 +169,12 @@ namespace EventPass.Controllers
         }
 
         [HttpPost("{id}/retirar-ingresso")]
+        [Authorize]
         [SwaggerOperation(Summary = "Retira ingresso para um evento")]
-        public void RetirarIngresso([FromHeader(Name = "IdUsuario")] int idUsuario, int id)
+        public void RetirarIngresso(int id)
         {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
             if(!service.RetirarIngresso(id, idUsuario))
             {
                 throw new BadHttpRequestException(string.Format("Não foi possível retirar ingresssos para o evento ID {0} e usuário ID {1}. Limite de ingressos excedido.", id.ToString(), idUsuario.ToString()), 400);
