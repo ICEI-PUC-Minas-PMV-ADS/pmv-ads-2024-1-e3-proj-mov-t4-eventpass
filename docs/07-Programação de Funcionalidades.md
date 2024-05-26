@@ -1,15 +1,19 @@
 # Programação de Funcionalidades
 
-<span style="color:red">Pré-requisitos: <a href="2-Especificação do Projeto.md"> Especificação do Projeto</a></span>, <a href="3-Projeto de Interface.md"> Projeto de Interface</a>, <a href="4-Metodologia.md"> Metodologia</a>, <a href="3-Projeto de Interface.md"> Projeto de Interface</a>, <a href="5-Arquitetura da Solução.md"> Arquitetura da Solução</a>
+Durante a etapa de desenvolvimento, os artefatos de software foram elaborados com base nos requisitos funcionais.
 
-Implementação do sistema descritas por meio dos requisitos funcionais e/ou não funcionais. Deve relacionar os requisitos atendidos os artefatos criados (código fonte) além das estruturas de dados utilizadas e as instruções para acesso e verificação da implementação que deve estar funcional no ambiente de hospedagem.
+A tabela a seguir estabelece a correlação entre o artefato produzido e o respectivo requisito funcional.
 
-Para cada requisito funcional, pode ser entregue um artefato desse tipo
-
-> **Links Úteis**:
->
-> - [Trabalhando com HTML5 Local Storage e JSON](https://www.devmedia.com.br/trabalhando-com-html5-local-storage-e-json/29045)
-> - [JSON Tutorial](https://www.w3resource.com/JSON)
-> - [JSON Data Set Sample](https://opensource.adobe.com/Spry/samples/data_region/JSONDataSetSample.html)
-> - [JSON - Introduction (W3Schools)](https://www.w3schools.com/js/js_json_intro.asp)
-> - [JSON Tutorial (TutorialsPoint)](https://www.tutorialspoint.com/json/index.htm)
+| ID     | Descrição do Requisito                                                                                                                                     | Artefato produzido                                                                                        |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| RF-001 | A aplicação deve exibir uma página inicial.                                                                                                      | \Views\Home\Index-Privacy.cshtml, \Views\Home\Privacy.cshtml, View\src\pages\homePage.js                                    |
+| RF-002 | A aplicação deve exibir os próximos 3 eventos na tela principal.                                                                                          | \Views\Home\Index.cshtml, View\src\pages\homePage.js                                                |
+| RF-003 | A aplicação deve permitir o cadastro de gestores e espectadores.                                                                                           | \Controllers\UsuariosController.cs, \Views\Usuarios\Create-Index.cshtml, \View\src\pages\profile.js                       |
+| RF-004 | A aplicação deve conter perfis de gestor de eventos e espectador.                                                                                        | \Controllers\UsuariosController.cs, \Views\Usuarios\Details.cshtml, \View\src\pages\profile.js                                           |
+| RF-005 | A aplicação deve permitir o gerenciamento do evento pelo gestor.                                                                                           | \Controllers\EventosController.cs, \Views\Eventos\Create-Delete-Details-Edit.cshtml                                                                                  |
+| RF-006 | A aplicação deve permitir o espectador pesquisar o evento pelo nome.   | \View\src\pages\buscar.js, \Controllers\EventosController.cs, Views\Eventos\Buscar.cshtml                                     |
+| RF-007 | A aplicação deve garantir que ao cadastrar o evento, o gestor informe a atração, o local, a data e a quantidade de ingressos disponíveis.                                                                         | \Controllers\EventosController.cs, \Models\Evento.cs, \Views\Eventos\Create.cshtml |
+| RF-008 | A aplicação deve permitir o gerenciamento dos ingressos retirados pelo espectador.                                                                             | \Controllers\IngressosController.cs                     |
+| RF-009 | A aplicação deve enviar um e-mail de confirmação de reserva para o espectador.  | \Services\EmailService.cs                                        |
+| RF-010 | A aplicação deve possibilitar ao gestor do evento gerar relatório geral do evento com dados do eventos, ingressos disponíveis e ingressos já distribuídos.  | \Controllers\EventosController.cs, \Views\Eventos\Relatorio.cshtml                                        |
+| RF-011 | A aplicação deve possibilitar ao gestor do evento e espectador a redefinição de senha.  | \Views\Usuarios\EsqueciSenha.cshtml, \Views\Usuarios\RedefinirSenha.cshtml, \Controllers\UsuariosController.cs |
