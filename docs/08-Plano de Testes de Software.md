@@ -40,10 +40,6 @@ Os testes serão realizados em diferentes níveis, sendo eles:
    * CT13: Gerenciamento dos ingressos retirados pelo espectador. 
    * CT14: Confirmação de reserva enviada por e-mail para o espectador. 
 
-**5. Outras Funcionalidades (RF-010, RF-011):**
-   * CT15: Geração de relatório geral do evento pelo gestor.
-   * CT16: Redefinição de senha pelo gestor e espectador. 
-
 ## 5. Ambiente de Teste
 
 Os testes serão realizados em dispositivos móveis iOS e Android, utilizando emuladores e dispositivos reais.  
