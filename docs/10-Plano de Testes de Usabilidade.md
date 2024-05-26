@@ -12,13 +12,15 @@ Avaliar a usabilidade da aplicação móvel EventPASS, identificando possíveis 
 * Teste de Usabilidade: Coletar feedback dos usuários sobre a experiência de uso. 
 * Teste de Satisfação: Obter a opinião dos usuários sobre a satisfação geral com a aplicação.
 
-## 3. Tarefas de Usabilidade
+## 3. Casos de Teste
 
-* Realizar o registro como novo usuário na aplicação. 
-* Navegar pela lista de eventos e encontrar um evento de interesse. 
-* Visualizar os detalhes do evento selecionado. 
-* Realizar reserva de ingressos. 
-* Verificar o reserva de ingressos na aplicação.
+* CT-01 – Realizar cadastro. 
+* CT-02 – Login de usuário. 
+* CT-03 – Cadastrar evento. 
+* CT-04 – Gerenciar os eventos. 
+* CT-05 – Solicitar ingressos.
+* CT-06 – Gerenciar os ingressos retirados.
+* CT-07 – Gerenciar cadastro.
 
 ## 4. Métricas de Avaliação
 
@@ -28,7 +30,7 @@ Avaliar a usabilidade da aplicação móvel EventPASS, identificando possíveis 
 
 ## 5. Análise de Resultados
 
-Um questionário para avaliar usabilidade será aplicado e resultados serão analisados, identificando áreas de dificuldade e sugestões de melhoria. As melhorias e correções necessárias para garantir uma melhor experiência do usuário serão avaliadas e priorizadas de acordo com o seu grau de impacto na usabilidade da aplicação. 
+Um grupo de usuários seram observados enquando realizem tarefas na aplicação, identificando áreas de dificuldade e sugestões de melhoria. As melhorias e correções necessárias para garantir uma melhor experiência do usuário serão avaliadas e priorizadas de acordo com o seu grau de impacto na usabilidade da aplicação. 
 
 ## 6. Resposabilidades
 
