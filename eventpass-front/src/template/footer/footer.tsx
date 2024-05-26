@@ -1,14 +1,10 @@
 import * as React from 'react'
 import HomePage from '../../pages/home'
 import Buscar from '../../pages/buscar'
-import Profile from '../../pages/profile'
+import Profile from '../../pages/signIn'
 import { BottomNavigation } from 'react-native-paper'
-
-const HomeRoute = () => <HomePage />
-
-const SearchRoute = () => <Buscar />
-
-const ProfileRoute = () => <Profile />
+import { useAuth } from '../../contexts/Auth'
+import SignIn from '../../pages/signIn'
 
 const Footer: React.FC = () => {
   const [index, setIndex] = React.useState(0)
@@ -21,6 +17,14 @@ const Footer: React.FC = () => {
     { key: 'search', title: 'Buscar', focusedIcon: 'magnify' },
     { key: 'profile', title: 'Perfil', focusedIcon: 'account' },
   ])
+
+  const { user } = useAuth()
+
+  const HomeRoute = () => <HomePage />
+
+  const SearchRoute = () => <Buscar />
+
+  const ProfileRoute = () => (user ? <Profile /> : <SignIn />)
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeRoute,

@@ -1,14 +1,18 @@
 import React from 'react'
-import { StyleSheet, ScrollView, Text } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import CarouselHome from '../components/carousel'
+import Header from '../template/header/header'
+import Footer from '../template/footer/footer'
 
 const HomePage: React.FC = () => {
   return (
     <>
-      <Text style={styles.title}>Eventos em destaque!</Text>
-      <ScrollView>
-        <CarouselHome />
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView>
+          <Text style={styles.title}>Eventos em destaque!</Text>
+          <CarouselHome />
+        </ScrollView>
+      </View>
     </>
   )
 }
@@ -21,6 +25,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'left',
+  },
+  container: {
+    backgroundColor: '#fff',
   },
 })
 

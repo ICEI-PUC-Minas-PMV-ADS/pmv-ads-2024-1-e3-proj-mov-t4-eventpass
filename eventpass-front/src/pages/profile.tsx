@@ -1,14 +1,24 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import { Text, View } from 'react-native'
+import { Button } from 'react-native-paper'
+import { useAuth } from '../contexts/Auth'
 
-
-const Profile = () => {
+const ProfilePage: React.FC = () => {
+  const { signOut } = useAuth()
 
   return (
-    <View >
+    <View>
       <Text>Profile</Text>
+      <Button
+        mode="contained"
+        onPress={() => {
+          signOut()
+        }}
+        style={{ backgroundColor: 'red' }}
+      >
+        Sair da conta
+      </Button>
     </View>
   )
 }
 
-export default Profile
+export default ProfilePage
