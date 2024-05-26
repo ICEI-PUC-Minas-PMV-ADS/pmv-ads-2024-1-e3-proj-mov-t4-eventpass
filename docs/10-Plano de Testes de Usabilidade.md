@@ -36,6 +36,7 @@ Um grupo de usuários seram observados enquando realizem tarefas na aplicação,
 
 * **Equipe de Teste de Usabilidade:** Responsáveis por coletar feedback dos usuários finais e analisar os resultados obtidos. 
 * **Equipe de Desenvolvimento:** Responsável por implementar as alterações recomendadas para melhorar a usabilidade.
+* **Grupo de usuários representativos:** Responsáveis por testar a aplicação, fornecendo feedbacks valiosos para a identificação de dificuldades durante o manuseio do aplicativo e pontos de melhoria.
 
 ## 7. Cronograma
 
