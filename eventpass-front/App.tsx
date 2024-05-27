@@ -1,13 +1,14 @@
-import Header from './src/template/header/header'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
-import Footer from './src/template/footer/footer'
 import React from 'react'
+import { Router } from './src/router/router'
+import { AuthProvider } from './src/contexts/Auth'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <Header />
-      <Footer />
-    </SafeAreaProvider>
+    <AuthProvider>
+      <SafeAreaProvider>
+        <Router />
+      </SafeAreaProvider>
+    </AuthProvider>
   )
 }

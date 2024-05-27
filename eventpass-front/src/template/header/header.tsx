@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Appbar } from 'react-native-paper';
-import { View, StyleSheet, Image } from 'react-native';
+import * as React from 'react'
+import { Appbar } from 'react-native-paper'
+import { View, StyleSheet, Image } from 'react-native'
 
 const Header: React.FC = () => {
   return (
@@ -12,26 +12,26 @@ const Header: React.FC = () => {
         />
       </View>
     </Appbar.Header>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   header: {
-    // paddingTop: 8, // Espaçamento superior para Android
-    paddingHorizontal: 16, // Padding lateral de 8px
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
   },
   logoContainer: {
     flex: 5,
     alignItems: 'flex-start',
   },
   logo: {
-    width: 100, // Ajuste o tamanho da logo conforme necessário
-    height: 38, // Ajuste o tamanho da logo conforme necessário
+    width: 100,
+    height: 38,
   },
   input: {
     flex: 6,
-    marginLeft: 8, // Espaçamento à esquerda do input
+    marginLeft: 8,
   },
-});
+})
 
-export default Header;
+export default Header

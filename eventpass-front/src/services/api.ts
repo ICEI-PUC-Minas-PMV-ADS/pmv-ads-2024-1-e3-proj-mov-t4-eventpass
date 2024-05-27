@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://eventpass-api.azurewebsites.net/api/',
+  baseURL: 'https://eventpassapi.azurewebsites.net/api/',
 })
 
 export default api

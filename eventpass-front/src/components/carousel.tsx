@@ -8,6 +8,7 @@ const CarouselHome: React.FC = () => {
   const [eventos, setEventos] = useState<Evento[]>([])
 
   useEffect(() => {
+    CarouselHome
     const getEventosData = async () => {
       try {
         const response = await api.get('Eventos?top=3')
