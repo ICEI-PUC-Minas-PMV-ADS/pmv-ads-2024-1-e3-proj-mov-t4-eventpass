@@ -2,23 +2,9 @@
 
 namespace EventPass.Services
 {
-    public class EventosService
+    public class EventosService(AppDbContext appDbContext, StorageService storageService, IngressosService ingressosService, EmailService emailService, UsuariosService usuariosService, ILogger<EventosService> logger)
     {
         private const int QUANTIDADE_MAXIMA_INGRESSOS_EVENTO = 3;
-        private readonly AppDbContext appDbContext;
-        private readonly StorageService storageService;
-        private readonly IngressosService ingressosService;
-        private readonly EmailService emailService;
-        private readonly UsuariosService usuariosService;
-
-        public EventosService(AppDbContext appDbContext, StorageService storageService, IngressosService ingressosService, EmailService emailService, UsuariosService usuariosService)
-        {
-            this.appDbContext = appDbContext;
-            this.storageService = storageService;
-            this.ingressosService = ingressosService;
-            this.emailService = emailService;
-            this.usuariosService = usuariosService;
-        }
 
         public List<Evento> GetTop(int? top)
         {
@@ -148,7 +134,14 @@ namespace EventPass.Services
                 && quantidadeIngressosEvento < evento.TotalIngressos)
             {
                 Ingresso ingresso = ingressosService.Create(id, idUsuario);
-                emailService.EnviarEmailConfirmacaoReserva(usuario.Email, ingresso.Id, evento.NomeEvento, usuario.NomeUsuario);
+                try
+                {
+                    emailService.EnviarEmailConfirmacaoReserva(usuario.Email, ingresso.Id, evento.NomeEvento, usuario.NomeUsuario);
+                } 
+                catch (Exception e)
+                {
+                    logger.LogError(e, "Ocorreu um erro com o envio do e-mail de confirmação de retirada de ingresso para o endereço {}", usuario.Email);
+                }
                 return true;
             }
             else
