@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useCallback } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createContext, useState } from 'react'
 import { authService } from '../services/authService'
@@ -12,6 +12,7 @@ interface AuthContextData {
   user?: UserData
   signIn: (email: string, password: string) => Promise<UserData>
   signOut: () => Promise<void>
+  refresh: () => void
   loading: boolean
 }
 
@@ -36,12 +37,16 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     setLoading(false)
   }
 
+  const refresh = useCallback(() => {
+    loadUserStorage()
+  }, [])
+
   async function signIn(email: string, password: string): Promise<UserData> {
     try {
       const auth = await authService.signIn(email, password)
-
       setUser(auth)
-      AsyncStorage.setItem('@eventpassAuth', JSON.stringify(auth))
+      await AsyncStorage.setItem('@eventpassAuth', JSON.stringify(auth))
+      refresh()
       return auth
     } catch (error) {
       Alert.alert('Erro', 'Usuário ou senha inválidos')
@@ -50,12 +55,13 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   }
 
   async function signOut(): Promise<void> {
+    await AsyncStorage.removeItem('@eventpassAuth')
     setUser(undefined)
-    AsyncStorage.removeItem('@eventpassAuth')
-    return
+    refresh()
   }
+
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, loading }}>
+    <AuthContext.Provider value={{ user, signIn, signOut, refresh, loading }}>
       {children}
     </AuthContext.Provider>
   )

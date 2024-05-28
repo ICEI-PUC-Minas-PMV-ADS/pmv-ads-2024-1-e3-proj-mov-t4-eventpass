@@ -7,7 +7,7 @@ import { HomeStackParamList } from '../router/AuthStack'
 import { formatarDataHora } from '../utils/formatData'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { TouchableRipple, Portal, Button, Modal } from 'react-native-paper'
-import { getIngresso } from '../services/getIngresso'
+import { getIngresso } from '../services/getIngressoService'
 import { useAuth } from '../contexts/Auth'
 
 type EventosPageRouteProp = RouteProp<HomeStackParamList, 'EventosPage'>
