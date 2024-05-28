@@ -51,7 +51,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
   async function signOut(): Promise<void> {
     setUser(undefined)
-    console.log('signOut')
     AsyncStorage.removeItem('@eventpassAuth')
     return
   }

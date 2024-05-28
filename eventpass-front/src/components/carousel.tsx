@@ -3,25 +3,35 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import { TouchableRipple } from 'react-native-paper'
 import api from '../services/api'
 import { Evento } from '../interfaces/eventos'
+import { formatarDataHora } from '../utils/formatData'
+import { getEventos } from '../services/getEventosServices'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { HomeStackParamList } from '../router/AuthStack'
 
 const CarouselHome: React.FC = () => {
+  type HomeScreenNavigationProp = StackNavigationProp<
+    HomeStackParamList,
+    'EventosPage'
+  >
+  const navigation = useNavigation<HomeScreenNavigationProp>()
   const [eventos, setEventos] = useState<Evento[]>([])
 
   useEffect(() => {
-    CarouselHome
-    const getEventosData = async () => {
+    const fetchEventos = async () => {
       try {
-        const response = await api.get('Eventos?top=3')
-        setEventos(response.data)
+        const data = await getEventos(3)
+        setEventos(data)
       } catch (error) {
         console.error('Erro ao carregar eventos:', error)
       }
     }
-    getEventosData()
+
+    fetchEventos()
   }, [])
 
-  const handlePress = () => {
-    console.log('Pressed')
+  const handlePress = (idEvento: number) => {
+    navigation.navigate('EventosPage', { idEvento })
   }
 
   return (
@@ -35,13 +45,13 @@ const CarouselHome: React.FC = () => {
             }}
           />
           <View style={styles.childCarousel}>
-            <Text style={styles.title}>{item.dataHora}</Text>
-            <TouchableRipple onPress={handlePress}>
+            <Text style={styles.title}>{formatarDataHora(item.dataHora)}</Text>
+            <TouchableRipple onPress={() => handlePress(item.id)}>
               <Text style={styles.title}>Ver detalhes</Text>
             </TouchableRipple>
           </View>
           <View style={styles.body}>
-            <TouchableRipple onPress={handlePress}>
+            <TouchableRipple onPress={() => handlePress(item.id)}>
               <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
                 {item.nome}
               </Text>

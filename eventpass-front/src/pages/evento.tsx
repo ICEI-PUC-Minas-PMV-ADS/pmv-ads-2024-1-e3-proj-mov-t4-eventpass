@@ -1,20 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
-import { TouchableRipple } from 'react-native-paper'
-import { RouteProp, useRoute } from '@react-navigation/native'
-import api from '../services/api'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Image, ScrollView, Alert } from 'react-native'
 import { Evento } from '../interfaces/eventos'
+import api from '../services/api'
+import { useRoute, RouteProp, useNavigation } from '@react-navigation/native'
+import { HomeStackParamList } from '../router/AuthStack'
+import { formatarDataHora } from '../utils/formatData'
+import Ionicons from '@expo/vector-icons/Ionicons'
+import { TouchableRipple, Portal, Button, Modal } from 'react-native-paper'
+import { getIngresso } from '../services/getIngresso'
+import { useAuth } from '../contexts/Auth'
 
-type RootStackParamList = {
-  Evento: { idEvento: number }
-}
+type EventosPageRouteProp = RouteProp<HomeStackParamList, 'EventosPage'>
 
-type EventoPageRouteProp = RouteProp<RootStackParamList, 'Evento'>
-
-const EventoPage: React.FC = () => {
-  const route = useRoute<EventoPageRouteProp>()
+const EventosPage: React.FC = () => {
+  const navigate = useNavigation()
+  const route = useRoute<EventosPageRouteProp>()
   const { idEvento } = route.params
   const [evento, setEvento] = useState<Evento | null>(null)
+  const [modalVisible, setModalVisible] = useState(false)
+  const { user } = useAuth()
+
+  const handleSubmitEvent = async (id: number) => {
+    await getIngresso(id, user)
+    navigate.goBack()
+  }
 
   useEffect(() => {
     const getEventoData = async () => {
@@ -22,102 +31,190 @@ const EventoPage: React.FC = () => {
         const response = await api.get(`Eventos/${idEvento}`)
         setEvento(response.data)
       } catch (error) {
-        console.error('Erro ao carregar evento:', error)
+        console.error('Erro ao carregar eventos:', error)
       }
     }
     getEventoData()
   }, [idEvento])
 
-  const handlePress = () => {
-    console.log('Pressed')
-  }
-
-  if (!evento) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}>Carregando...</Text>
-      </View>
-    )
-  }
-
-  const flyerUrl = `${evento.flyer}`.trim()
+  const flyerUrl = evento?.flyer
 
   return (
-    <ScrollView style={styles.container}>
-      <View key={evento.id} style={styles.item}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: flyerUrl,
-          }}
-          onError={(error) =>
-            console.error(
-              `Failed to load image: ${flyerUrl}`,
-              error.nativeEvent
-            )
-          }
-        />
-        <View style={styles.childCarousel}>
-          <Text style={styles.title}>{evento.dataHora}</Text>
-          <TouchableRipple onPress={handlePress}>
-            <Text style={styles.title}>Ver detalhes</Text>
+    <>
+      <ScrollView>
+        <View style={styles.container}>
+          <TouchableRipple onPress={() => navigate.goBack()}>
+            <View style={styles.goBack}>
+              <Ionicons name="arrow-back" size={24} color="black" />
+              <Text style={styles.titleBack}>Voltar</Text>
+            </View>
           </TouchableRipple>
-        </View>
-        <View style={styles.body}>
-          <TouchableRipple onPress={handlePress}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-              {evento.nome}
+          <Image
+            style={styles.tinyLogo}
+            source={{
+              uri: flyerUrl,
+            }}
+            onError={(error) =>
+              console.error(
+                `Failed to load image: ${flyerUrl}`,
+                error.nativeEvent
+              )
+            }
+          />
+          <View style={styles.child}>
+            <Text style={styles.text}>{evento?.nome}</Text>
+          </View>
+          <View style={styles.body}>
+            <Text style={styles.title}>
+              {evento ? formatarDataHora(evento.dataHora) : ''}
             </Text>
-          </TouchableRipple>
-          <Text style={{ marginTop: 10 }}>{evento.local}</Text>
+            <Text style={[styles.conteudo, { fontWeight: 'bold' }]}>
+              {evento?.local}
+            </Text>
+          </View>
+          <View style={styles.hr} />
+          <View style={styles.bodyDescricao}>
+            <Text
+              style={[
+                styles.title,
+                {
+                  color: '#4F4F4F',
+                  fontWeight: 'bold',
+                },
+              ]}
+            >
+              Descrição do evento
+            </Text>
+            <Text style={styles.conteudo}>{evento?.descricao}</Text>
+          </View>
+          <View style={styles.hr} />
+
+          {/* Botão para abrir o modal */}
+          <Button
+            onPress={() => setModalVisible(true)}
+            style={styles.button}
+            buttonColor="#f15a24"
+            textColor="white"
+          >
+            Retirar ingresso
+          </Button>
+
+          {/* Modal */}
+          <Portal>
+            <Modal
+              visible={modalVisible}
+              onDismiss={() => setModalVisible(false)}
+              contentContainerStyle={styles.modalView}
+            >
+              <Text style={styles.modalText}>
+                Confirmar retirada de ingresso?
+              </Text>
+              <View>
+                <Button
+                  style={styles.button}
+                  onPress={() => {
+                    handleSubmitEvent(idEvento)
+                    setModalVisible(false)
+                  }}
+                  buttonColor="#f15a24"
+                  textColor="white"
+                >
+                  Confirmar
+                </Button>
+              </View>
+            </Modal>
+          </Portal>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%',
+    padding: 24,
+    backgroundColor: '#fff',
+    paddingBottom: 100,
+    fontFamily: 'Livvic-Bold',
   },
-  loadingText: {
-    fontSize: 18,
-    color: '#333',
+  button: {
+    width: '50%',
+    marginTop: 10,
+    alignSelf: 'center',
+  },
+  goBack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    gap: 10,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 25,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  tinyLogo: {
+    width: '100%',
+    borderRadius: 15,
+    height: 200,
+  },
+  child: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 40,
   },
   title: {
     fontWeight: 'bold',
     color: '#F15A24',
+    fontSize: 18,
+  },
+  titleBack: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 18,
+  },
+  conteudo: {
+    marginTop: 5,
+    color: '#3B3B3B',
     fontSize: 16,
-    marginTop: 10,
-  },
-  item: {
-    marginBottom: 20,
-    borderRadius: 8,
-    backgroundColor: '#f8f8f8',
-    padding: 10,
-  },
-  childCarousel: {
-    marginTop: 10,
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 15,
+    textAlign: 'justify',
   },
   body: {
     flexDirection: 'column',
-    marginTop: 16,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    marginTop: 20,
+    alignItems: 'flex-start',
+  },
+  bodyDescricao: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  hr: {
+    borderBottomColor: '#DEDEDE',
+    borderBottomWidth: 1,
+    marginVertical: 20,
+  },
+  modalText: {
+    marginBottom: 15,
+    fontSize: 18,
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
 })
 
-export default EventoPage
+export default EventosPage
