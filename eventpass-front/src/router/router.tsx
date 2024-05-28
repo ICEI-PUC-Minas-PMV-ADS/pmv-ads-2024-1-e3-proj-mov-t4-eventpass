@@ -9,7 +9,7 @@ import { AuthStack } from './AuthStack'
 import Header from '../template/header/header'
 
 export function Router() {
-  const { user, loading } = useAuth()
+  const { loading } = useAuth()
 
   if (loading) {
     return (
@@ -22,7 +22,7 @@ export function Router() {
   return (
     <NavigationContainer>
       <Header />
-      {user ? <AppStack /> : <AuthStack />}
+      <AuthStack />
     </NavigationContainer>
   )
 }

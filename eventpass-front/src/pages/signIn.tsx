@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, ScrollView } from 'react-native'
+import { View, StyleSheet, Text, ScrollView, Alert } from 'react-native'
 import { Button, TextInput, Checkbox } from 'react-native-paper'
 import { useAuth } from '../contexts/Auth'
 import api from '../services/api'
@@ -23,7 +23,7 @@ const Profile = () => {
       nome,
       cpf,
       email,
-      password,
+      senha: password,
       tipo: tipo,
       confirmarSenha: confirmPassword,
     }
@@ -34,8 +34,10 @@ const Profile = () => {
           'Content-Type': 'application/json',
         },
       })
-      console.log('Usuário criado com sucesso')
+      Alert.alert('Sucesso', 'Cadastro efetuado com sucesso!')
+      setIsLogin(true)
     } catch (error) {
+      Alert.alert('Erro', 'Erro ao efetuar cadastro, tente novamente.')
       console.error('Erro ao criar usuário:', error)
     }
   }
@@ -145,7 +147,7 @@ const Profile = () => {
 
         {/* Botão para alternar entre tela de login e cadastro */}
         <View style={styles.toggleButton}>
-          <Button mode="text" onPress={handleToggleScreen} color="#f15a24">
+          <Button mode="text" onPress={handleToggleScreen} textColor="black">
             {isLogin
               ? 'Ainda não é cadastrado? Cadastre-se'
               : 'Já tem uma conta? Faça login'}
