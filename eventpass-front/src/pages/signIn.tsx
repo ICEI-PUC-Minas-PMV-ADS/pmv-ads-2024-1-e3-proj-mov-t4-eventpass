@@ -153,14 +153,12 @@ const Profile = () => {
               : 'Já tem uma conta? Faça login'}
           </Button>
         </View>
-
-        {/* Botão para fazer login ou cadastro */}
         <View style={styles.button}>
           <Button
             mode="contained"
             onPress={() => {
               if (isLogin) {
-                signIn(email, password) // Fazer login
+                signIn(email, password)
               } else {
                 createUser()
               }
