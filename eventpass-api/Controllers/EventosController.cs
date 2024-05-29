@@ -134,7 +134,7 @@ namespace EventPass.Controllers
         [HttpPut("{id}")]
         [Authorize]
         [SwaggerOperation(Summary = "Atualizar evento por ID", Description = "Atualiza um evento existente com os novos dados fornecidos.")]
-        public void Put(int id, [FromForm] EventoRequest evento)
+        public IActionResult Put(int id, [FromForm] EventoRequest evento)
         {
             var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
 
@@ -150,8 +150,10 @@ namespace EventPass.Controllers
 
             if (!service.Update(idUsuario, id, entity, evento.Flyer))
             {
-                throw new BadHttpRequestException(string.Format("Evento com ID {0} não foi encontrado ou não pertence ao usuário {1}.", id.ToString(), idUsuario.ToString()), 404);
+                return BadRequest(string.Format("Evento com ID {0} não foi encontrado ou não pertence ao usuário {1}.", id.ToString(), idUsuario.ToString()));
             }
+
+            return Created();
         }
 
         // DELETE api/<EventosController>/5
