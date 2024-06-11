@@ -10,6 +10,7 @@ import ProfilePage from '../pages/profile'
 import { createStackNavigator } from '@react-navigation/stack'
 import EventosPage from '../pages/evento'
 import { ParamListBase } from '@react-navigation/native'
+import TicketPage from '../pages/ingresso'
 
 export interface HomeStackParamList extends ParamListBase {
   HomePage: undefined
@@ -23,6 +24,8 @@ const HomeStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomePage" component={HomePage} />
       <Stack.Screen name="EventosPage" component={EventosPage} />
+      <Stack.Screen name="EditTicketPage" component={TicketPage} />
+      <Stack.Screen name="EditProfilePage" component={ProfilePage} />
     </Stack.Navigator>
   )
 }
@@ -79,21 +82,38 @@ export function AuthStack() {
         }}
       />
       {user ? (
-        <Tab.Screen
-          name="Profile"
-          component={ProfilePage}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <View>
-                <Ionicons
-                  name="person"
-                  size={24}
-                  color={focused ? '#f15a24' : '#ffffff'}
-                />
-              </View>
-            ),
-          }}
-        />
+        <Tab.Group>
+          <Tab.Screen
+            name="Profile"
+            component={TicketPage}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <View>
+                  <Ionicons
+                    name="ticket-sharp"
+                    size={24}
+                    color={focused ? '#f15a24' : '#ffffff'}
+                  />
+                </View>
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Ingresso"
+            component={ProfilePage}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <View>
+                  <Ionicons
+                    name="person"
+                    size={24}
+                    color={focused ? '#f15a24' : '#ffffff'}
+                  />
+                </View>
+              ),
+            }}
+          />
+        </Tab.Group>
       ) : (
         <Tab.Screen
           name="Sign In"

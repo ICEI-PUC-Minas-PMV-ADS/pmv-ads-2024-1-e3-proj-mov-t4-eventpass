@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react'
 import { Usuario } from '../interfaces/usuarios'
 import { getUsuario } from '../services/getUsuarioService'
 import { formatarTipoUsuario } from '../utils/formatTipoUser'
+import Loading from '../components/loading'
 
 const ProfilePage: React.FC = () => {
   const [usuario, setUsuario] = useState<Usuario | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
   const { user, signOut } = useAuth()
 
   useEffect(() => {
@@ -18,12 +20,18 @@ const ProfilePage: React.FC = () => {
           setUsuario(data)
         } catch (error) {
           console.error('Erro ao carregar Usuario:', error)
+        } finally {
+          setLoading(false)
         }
       }
     }
 
     fetchUsuario()
   }, [user])
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <View style={styles.container}>

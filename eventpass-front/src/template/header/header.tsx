@@ -25,7 +25,7 @@ const Header: React.FC = () => {
     }
 
     fetchUsuario()
-  }, [user]) // Adicione 'user' como dependência aqui
+  }, [user])
 
   return (
     <Appbar.Header style={styles.header}>

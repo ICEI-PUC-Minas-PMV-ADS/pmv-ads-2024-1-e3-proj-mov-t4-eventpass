@@ -4,7 +4,6 @@ import React from 'react'
 import { useAuth } from '../contexts/Auth'
 import { ActivityIndicator, Drawer } from 'react-native-paper'
 import { View } from 'react-native'
-import { AppStack } from './AppStack'
 import { AuthStack } from './AuthStack'
 import Header from '../template/header/header'
 
