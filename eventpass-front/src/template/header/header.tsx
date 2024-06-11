@@ -5,6 +5,7 @@ import { View, StyleSheet, Image, Text } from 'react-native'
 import { useAuth } from '../../contexts/Auth'
 import { getUsuario } from '../../services/getUsuarioService'
 import { Usuario } from '../../interfaces/usuarios'
+import { obterPrimeiroNome } from '../../utils/formatNameHeader'
 
 const Header: React.FC = () => {
   const [usuario, setUsuario] = useState<Usuario | null>(null)
@@ -27,6 +28,8 @@ const Header: React.FC = () => {
     fetchUsuario()
   }, [user])
 
+  const primeiroNome = obterPrimeiroNome(usuario?.nomeUsuario)
+
   return (
     <Appbar.Header style={styles.header}>
       <View style={styles.logoContainer}>
@@ -34,9 +37,7 @@ const Header: React.FC = () => {
           source={require('../../../assets/logo.png')}
           style={styles.logo}
         />
-        {usuario && (
-          <Text style={styles.textName}>Olá, {usuario?.nomeUsuario}</Text>
-        )}
+        {usuario && <Text style={styles.textName}>Olá, {primeiroNome}</Text>}
       </View>
     </Appbar.Header>
   )

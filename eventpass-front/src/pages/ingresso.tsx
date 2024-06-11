@@ -1,12 +1,4 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native'
+import { Text, View, StyleSheet, ScrollView, Image } from 'react-native'
 import { Button, Divider } from 'react-native-paper'
 import { useAuth } from '../contexts/Auth'
 import { useEffect, useState } from 'react'
@@ -17,10 +9,13 @@ import { deleteEvento, getMyEventos } from '../services/getEventosService'
 import { Evento } from '../interfaces/eventos'
 import { formatarDataHora } from '../utils/formatData'
 import Loading from '../components/loading'
+import { deleteIngresso, getMyIngressos } from '../services/getIngressoService'
+import { Ingresso } from '../interfaces/ingressos'
 
 const TicketPage: React.FC = () => {
   const [usuario, setUsuario] = useState<Usuario | null>(null)
   const [meusEventos, setMeusEventos] = useState<Array<Evento>>([])
+  const [meusIngressos, setMeusIngressos] = useState<Array<Ingresso>>([])
   const [loading, setLoading] = useState<boolean>(true)
   const { user, signOut, refresh } = useAuth()
 
@@ -43,10 +38,9 @@ const TicketPage: React.FC = () => {
 
   useEffect(() => {
     const fetchMeusEventos = async () => {
-      if (usuario) {
+      if (usuario && isGestor) {
         try {
           const data = await getMyEventos(user)
-          console.log(data)
           setMeusEventos(data)
         } catch (error) {
           console.error('Erro ao carregar eventos:', error)
@@ -57,10 +51,32 @@ const TicketPage: React.FC = () => {
     }
 
     fetchMeusEventos()
-  }, [usuario])
+  }, [usuario, isGestor])
+
+  useEffect(() => {
+    const fetchMeusIngressos = async () => {
+      if (usuario && !isGestor) {
+        try {
+          const data = await getMyIngressos(user)
+          setMeusIngressos(data)
+        } catch (error) {
+          console.error('Erro ao carregar Ingressos:', error)
+        } finally {
+          setLoading(false)
+        }
+      }
+    }
+
+    fetchMeusIngressos()
+  }, [usuario, isGestor])
 
   const handleDeleteEvent = async (id: number) => {
     await deleteEvento(id, user)
+    refresh()
+  }
+
+  const handleDeleteIngresso = async (id: number) => {
+    await deleteIngresso(id, user)
     refresh()
   }
 
@@ -138,42 +154,68 @@ const TicketPage: React.FC = () => {
       </Button>
     </ScrollView>
   ) : (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View>
         <Text style={styles.title}>MEUS INGRESSOS</Text>
       </View>
-      <View style={styles.containerData}>
-        <Text style={styles.titleData}>Nome do usuário</Text>
-        <Text>{usuario?.nomeUsuario}</Text>
-        <Text style={styles.titleData}>CPF/CNPJ</Text>
-        <Text>{usuario?.cpf}</Text>
-        <Text style={styles.titleData}>Email</Text>
-        <Text>{usuario?.email}</Text>
-        <Text style={styles.titleData}>Tipo de usuário</Text>
-        <Text>{formatarTipoUsuario(usuario?.tipo)}</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          mode="outlined"
-          onPress={() => {}}
-          style={styles.button}
-          textColor="#f15a24"
-          icon="pencil"
-        >
-          Editar perfil
-        </Button>
-        <Button
-          mode="contained"
-          onPress={async () => {
-            await signOut()
-          }}
-          buttonColor="#b61215"
-          style={styles.button}
-        >
-          Sair da conta
-        </Button>
-      </View>
-    </View>
+      {meusIngressos.length > 0 ? (
+        meusIngressos.map((ingresso) => (
+          <View key={ingresso.idIngresso}>
+            <View style={styles.containerData}>
+              <View>
+                <Text style={styles.text}>{ingresso.nomeEvento}</Text>
+                <Text style={styles.titleData}>
+                  {formatarDataHora(ingresso.dataEvento)}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.buttonGroup}>
+              <Button
+                mode="text"
+                onPress={() => {}}
+                style={styles.button}
+                textColor="#f15a24"
+                icon="eye"
+              >
+                Visualizar
+              </Button>
+              <Button
+                mode="text"
+                onPress={() => handleDeleteIngresso(ingresso.idIngresso)}
+                style={styles.button}
+                textColor="#f15a24"
+                icon="delete"
+              >
+                Deletar
+              </Button>
+            </View>
+            <Divider bold />
+          </View>
+        ))
+      ) : isGestor ? (
+        <View>
+          <Text style={styles.titleData}>
+            Você ainda não possui eventos, crie um agora mesmo!
+          </Text>
+          <Button
+            mode="contained-tonal"
+            onPress={() => {}}
+            style={styles.buttonCreate}
+            textColor="#ffffff"
+            buttonColor="#f15a24"
+            icon="pencil"
+          >
+            Criar novo evento
+          </Button>
+        </View>
+      ) : (
+        <View>
+          <Text style={styles.titleData}>
+            Você ainda não possui ingressos, compre um agora mesmo!
+          </Text>
+        </View>
+      )}
+    </ScrollView>
   )
 }
 
