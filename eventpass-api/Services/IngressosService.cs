@@ -3,28 +3,28 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EventPass.Services
 {
-    public class IngressosService
+    public class IngressosService(AppDbContext appDbContext, StorageService storageService)
     {
-        private readonly AppDbContext appDbContext;
-
-        public IngressosService(AppDbContext appDbContext)
-        {
-            this.appDbContext = appDbContext;
-        }
-
         public List<Ingresso> FindByIdUsuario(int idUsuario)
         {
-            return appDbContext.Ingressos
+            var ingressos = appDbContext.Ingressos
                 .Where(ingresso => ingresso.IdUsuario == idUsuario)
                 .Select(ingresso => new Ingresso
                 {
                     Id = ingresso.Id,
                     IdEvento = ingresso.IdEvento,
                     IdUsuario = ingresso.IdUsuario,
-                    Evento = ingresso.Evento,
+                    Evento = new Evento
+                    {
+                        IdEvento = ingresso.Evento.IdEvento,
+                        NomeEvento = ingresso.Evento.NomeEvento,
+                        Local = ingresso.Evento.Local,
+                        Flyer = storageService.GetFileImageStorageUrl(ingresso.Evento.Flyer)
+                    },
                     Usuario = ingresso.Usuario
                 })
                 .ToList();
+            return ingressos;
         }
 
         public bool Delete(int idUsuario, int id) 

@@ -32,7 +32,9 @@ namespace EventPass.Controllers
                 IdEvento = ingresso.IdEvento,
                 IdUsuario = ingresso.IdUsuario,
                 NomeEvento = ingresso.Evento.NomeEvento,
-                DataEvento = ingresso.Evento.DataHora
+                DataEvento = ingresso.Evento.DataHora,
+                LocalEvento = ingresso.Evento.Local,
+                FlyerEvento = ingresso.Evento.Flyer
             });
         }
 
