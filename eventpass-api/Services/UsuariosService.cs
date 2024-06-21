@@ -43,12 +43,25 @@ namespace EventPass.Services
             Usuario? found = appDbContext.Usuarios.Find(id);
             if (found != null)
             {
-                found.NomeUsuario = usuario.NomeUsuario;
-                found.CPF = usuario.CPF;
-                found.Email = usuario.Email;
-                found.Senha = usuario.Senha;
-                found.ConfirmarSenha = usuario.ConfirmarSenha;
-                found.Tipo = usuario.Tipo;
+                if (usuario.NomeUsuario != null)
+                {
+                    found.NomeUsuario = usuario.NomeUsuario;
+                }
+
+                if (usuario.Email != null)
+                {
+                    found.Email = usuario.Email;
+                }
+
+                if (usuario.Senha != null)
+                {
+                    found.Senha = usuario.Senha;
+                }
+
+                if (usuario.ConfirmarSenha != null)
+                {
+                    found.ConfirmarSenha = usuario.ConfirmarSenha;
+                }
 
                 appDbContext.Usuarios.Update(found);
                 appDbContext.SaveChanges();

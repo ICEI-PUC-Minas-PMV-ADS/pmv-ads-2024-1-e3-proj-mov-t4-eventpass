@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using EventPass.Controllers.Models;
-using Microsoft.VisualBasic;
 
 namespace EventPass.Controllers
 {
@@ -58,13 +57,13 @@ namespace EventPass.Controllers
         // PUT api/<UsuariosController>/5
         [HttpPut("{id}")]
         [SwaggerOperation(Summary = "Atualiza um usuário")]
-        public void Put(int id, [FromBody] UsuarioUpdateRequest usuario)
+        public IActionResult Update(int id, [FromBody] UsuarioUpdateRequest usuario)
         {
             var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
 
             if (id != idUsuario)
             {
-                throw new UnauthorizedAccessException(string.Format("Usuário logado não tem permissão para alterar dados do usuário com ID {0}", id));
+                return Unauthorized(string.Format("Usuário logado não tem permissão para alterar dados do usuário com ID {0}", id));
             }
             
             ValidarSenha(usuario.Senha, usuario.ConfirmarSenha);
@@ -79,8 +78,39 @@ namespace EventPass.Controllers
 
             if (!service.Update(id, entity))
             {
-                throw new BadHttpRequestException(string.Format("Usuário com id {0} não foi encontrado", id.ToString()), 404);
+                return NotFound(string.Format("Usuário com id {0} não foi encontrado", id.ToString()));
             }
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        [SwaggerOperation(Summary = "Atualiza um usuário parcialmente")]
+        public IActionResult Update(int id, [FromBody] UsuarioPatchRequest usuario)
+        {
+            var idUsuario = int.Parse(User.Claims.Where(c => c.Type == "id").FirstOrDefault().Value);
+
+            if (id != idUsuario)
+            {
+                return Unauthorized(string.Format("Usuário logado não tem permissão para alterar dados do usuário com ID {0}", id));
+            }
+            
+            ValidarSenha(usuario.Senha, usuario.ConfirmarSenha);
+            
+            Usuario entity =  new Usuario
+            {
+                NomeUsuario = usuario.Nome,
+                Email = usuario.Email,
+                Senha = usuario.Senha,
+                ConfirmarSenha = usuario.ConfirmarSenha
+            };
+
+            if (!service.Update(id, entity))
+            {
+                return NotFound(string.Format("Usuário com id {0} não foi encontrado", id.ToString()));
+            }
+
+            return NoContent();
         }
 
         // DELETE api/<UsuariosController>/5
@@ -108,7 +138,7 @@ namespace EventPass.Controllers
                 throw new BadHttpRequestException("Senhas não conferem.");
             }
 
-            if (senha.Length < 8) 
+            if (senha != null && senha.Length < 8) 
             {
                 throw new BadHttpRequestException("A senha deve possuir no mínimo 8 caracteres.");
             }

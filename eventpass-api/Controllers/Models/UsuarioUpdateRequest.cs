@@ -1,5 +1,3 @@
-using EventPass.Models;
-
 namespace EventPass.Controllers.Models 
 {
     public class UsuarioUpdateRequest
