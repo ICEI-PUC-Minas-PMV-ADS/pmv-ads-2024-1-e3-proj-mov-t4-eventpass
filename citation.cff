@@ -1,0 +1,27 @@
+message: Please cite this software using these metadata.
+title: EventPass
+authors:
+  - family-names: Marques Assis
+    given-names: Fernanda
+  - family-names: Chaves Dutra
+    given-names: Julia
+  - family-names: Eduardo Possidonio
+    given-names: Luiz
+  - family-names: Celso Mendes
+    given-names: Pedro
+  - family-names: Karoline de Almeida Costa
+    given-names: Samara
+  - family-names: Shayne Dutra
+    given-names: Sandro
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Roberto Gonçalves de Pontes
+    given-names: Diego
+keywords:
+  - Eventos
+  - Ingresso
+  - Gestão de eventos
+  - Gestão de ingressos
+repository-code: https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e3-proj-mov-t4-eventpass
+version: 1.0.0
+date-released: 2024-06-23
