@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createContext, useState } from 'react'
 import { authService } from '../services/authService'
 import { Alert } from 'react-native'
+import { LoginUsuario } from '../interfaces/usuarios'
 
 export interface UserData {
   token: string
@@ -10,7 +11,7 @@ export interface UserData {
 
 interface AuthContextData {
   user?: UserData
-  signIn: (email: string, password: string) => Promise<UserData>
+  signIn: (data: LoginUsuario) => Promise<UserData>
   signOut: () => Promise<void>
   refresh: () => void
   loading: boolean
@@ -41,9 +42,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
     loadUserStorage()
   }, [])
 
-  async function signIn(email: string, password: string): Promise<UserData> {
+  async function signIn(data: LoginUsuario): Promise<UserData> {
     try {
-      const auth = await authService.signIn(email, password)
+      const auth = await authService.signIn(data)
       setUser(auth)
       await AsyncStorage.setItem('@eventpassAuth', JSON.stringify(auth))
       refresh()

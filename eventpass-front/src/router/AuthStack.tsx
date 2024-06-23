@@ -11,10 +11,18 @@ import { createStackNavigator } from '@react-navigation/stack'
 import EventosPage from '../pages/evento'
 import { ParamListBase } from '@react-navigation/native'
 import TicketPage from '../pages/ingresso'
+import EditProfile from '../pages/editProfile'
+import EditEvento from '../pages/editEvento'
+import CreateEvento from '../pages/createEvento'
 
 export interface HomeStackParamList extends ParamListBase {
   HomePage: undefined
   EventosPage: { idEvento: number }
+  Ingresso: undefined
+  EditEvento: { idEvento: number }
+  CreateEvento: undefined
+  EditProfile: { idUsuario: number }
+  ProfilePage: undefined
 }
 
 const Stack = createStackNavigator<HomeStackParamList>()
@@ -24,8 +32,11 @@ const HomeStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomePage" component={HomePage} />
       <Stack.Screen name="EventosPage" component={EventosPage} />
-      <Stack.Screen name="EditTicketPage" component={TicketPage} />
-      <Stack.Screen name="EditProfilePage" component={ProfilePage} />
+      <Stack.Screen name="Ingresso" component={TicketPage} />
+      <Stack.Screen name="EditEvento" component={EditEvento} />
+      <Stack.Screen name="CreateEvento" component={CreateEvento} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="ProfilePage" component={ProfilePage} />
     </Stack.Navigator>
   )
 }
@@ -84,7 +95,7 @@ export function AuthStack() {
       {user ? (
         <Tab.Group>
           <Tab.Screen
-            name="Profile"
+            name="Ingresso"
             component={TicketPage}
             options={{
               tabBarIcon: ({ focused }) => (
@@ -99,7 +110,7 @@ export function AuthStack() {
             }}
           />
           <Tab.Screen
-            name="Ingresso"
+            name="Profile"
             component={ProfilePage}
             options={{
               tabBarIcon: ({ focused }) => (

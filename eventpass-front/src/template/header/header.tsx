@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Appbar } from 'react-native-paper'
 import { View, StyleSheet, Image, Text } from 'react-native'
 import { useAuth } from '../../contexts/Auth'
-import { getUsuario } from '../../services/getUsuarioService'
+import { getUsuario } from '../../services/UsuarioService'
 import { Usuario } from '../../interfaces/usuarios'
 import { obterPrimeiroNome } from '../../utils/formatNameHeader'
 

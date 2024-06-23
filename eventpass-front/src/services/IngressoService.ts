@@ -12,7 +12,6 @@ export const getIngresso = async (id: number, authToken?: UserData) => {
     Alert.alert('Sucesso', 'Ingresso retirado com sucesso!')
     return response.data;
   } catch (error) {
-    console.log('Erro ao retirar o ingresso:', error);
     Alert.alert('Erro', 'Erro ao retirar o ingresso.')
     throw error;
   }
@@ -27,7 +26,6 @@ export const getMyIngressos = async ( authToken?: UserData) => {
     });
     return response.data;
   } catch (error) {
-    console.log('Erro ao buscar ingressos do usuário:', error);
     Alert.alert('Erro', 'Erro ao buscar ingressos do usuário.')
     throw error;
   }
@@ -43,7 +41,6 @@ export const deleteIngresso = async (id: number, authToken?: UserData) => {
     Alert.alert('Sucesso', 'Ingresso excluído com sucesso!')
     return response.data;
   } catch (error) {
-    console.log('Erro ao excluir ingresso:', error);
     Alert.alert('Erro', 'Erro ao excluir ingresso.')
     throw error;
   }

@@ -1,10 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import CarouselHome from '../components/carousel'
-import { Button } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native'
-import { HomeStackParamList } from '../router/AuthStack'
-import { StackNavigationProp } from '@react-navigation/stack'
 
 const HomePage: React.FC = () => {
   return (

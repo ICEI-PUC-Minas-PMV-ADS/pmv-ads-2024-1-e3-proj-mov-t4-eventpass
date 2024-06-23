@@ -4,10 +4,11 @@ import { Searchbar, TouchableRipple } from 'react-native-paper'
 import api from '../services/api'
 import { Evento } from '../interfaces/eventos'
 import { formatarDataHora } from '../utils/formatData'
-import { getEventos, searchEventos } from '../services/getEventosService'
+import { getEventos, searchEventos } from '../services/EventosService'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { HomeStackParamList } from '../router/AuthStack'
 import { useNavigation } from '@react-navigation/native'
+import Loading from '../components/loading'
 
 const Buscar = () => {
   type HomeScreenNavigationProp = StackNavigationProp<
@@ -18,6 +19,7 @@ const Buscar = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [eventosBusca, setEventosBusca] = useState<Evento[]>([])
   const [searching, setSearching] = useState(false)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchEventos = async () => {
@@ -26,6 +28,8 @@ const Buscar = () => {
         setEventosBusca(data)
       } catch (error) {
         console.error('Erro ao carregar eventos:', error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -36,12 +40,14 @@ const Buscar = () => {
     const buscarEventos = async () => {
       if (searching) {
         try {
+          setLoading(true)
           const response = await searchEventos(searchQuery)
           setEventosBusca(response)
         } catch (error) {
           console.error('Erro ao buscar eventos:', error)
         } finally {
           setSearching(false)
+          setLoading(false)
         }
       }
     }
@@ -60,6 +66,10 @@ const Buscar = () => {
   const handleSearchClear = async () => {
     const data = await getEventos(10)
     setEventosBusca(data)
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
@@ -111,6 +121,8 @@ const Buscar = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    marginBottom: 150,
+    backgroundColor: '#fff',
   },
   searchBar: {
     marginBottom: 16,

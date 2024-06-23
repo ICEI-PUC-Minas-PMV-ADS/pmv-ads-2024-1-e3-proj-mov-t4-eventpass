@@ -7,8 +7,11 @@ import { HomeStackParamList } from '../router/AuthStack'
 import { formatarDataHora } from '../utils/formatData'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { TouchableRipple, Portal, Button, Modal } from 'react-native-paper'
-import { getIngresso } from '../services/getIngressoService'
+import { getIngresso } from '../services/IngressoService'
 import { useAuth } from '../contexts/Auth'
+import Loading from '../components/loading'
+import { getUsuario } from '../services/UsuarioService'
+import { Usuario } from '../interfaces/usuarios'
 
 type EventosPageRouteProp = RouteProp<HomeStackParamList, 'EventosPage'>
 
@@ -17,7 +20,9 @@ const EventosPage: React.FC = () => {
   const route = useRoute<EventosPageRouteProp>()
   const { idEvento } = route.params
   const [evento, setEvento] = useState<Evento | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
   const [modalVisible, setModalVisible] = useState(false)
+  const [usuario, setUsuario] = useState<Usuario | null>(null)
   const { user } = useAuth()
 
   const handleSubmitEvent = async (id: number) => {
@@ -32,12 +37,35 @@ const EventosPage: React.FC = () => {
         setEvento(response.data)
       } catch (error) {
         console.error('Erro ao carregar eventos:', error)
+      } finally {
+        setLoading(false)
       }
     }
     getEventoData()
   }, [idEvento])
 
+  useEffect(() => {
+    const fetchUsuario = async () => {
+      if (user) {
+        try {
+          const data = await getUsuario(user)
+          setUsuario(data)
+        } catch (error) {
+          console.error('Erro ao carregar Usuario:', error)
+        }
+      }
+    }
+
+    fetchUsuario()
+  }, [user])
+
+  const isGestor = usuario?.tipo === 1
+
   const flyerUrl = evento?.flyer
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <>
@@ -89,17 +117,17 @@ const EventosPage: React.FC = () => {
           </View>
           <View style={styles.hr} />
 
-          {/* Botão para abrir o modal */}
-          <Button
-            onPress={() => setModalVisible(true)}
-            style={styles.button}
-            buttonColor="#f15a24"
-            textColor="white"
-          >
-            Retirar ingresso
-          </Button>
+          {!isGestor && (
+            <Button
+              onPress={() => setModalVisible(true)}
+              style={styles.button}
+              buttonColor="#f15a24"
+              textColor="white"
+            >
+              Retirar ingresso
+            </Button>
+          )}
 
-          {/* Modal */}
           <Portal>
             <Modal
               visible={modalVisible}

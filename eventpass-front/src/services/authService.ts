@@ -1,12 +1,14 @@
+import { Alert } from 'react-native'
 import { UserData } from '../contexts/Auth'
 import api from './api'
+import { LoginUsuario } from '../interfaces/usuarios'
 
-async function signIn(email: string, password: string): Promise<UserData> {
+async function signIn(data: LoginUsuario): Promise<UserData> {
     try {
-        const response = await api.post('Login', { username: email, password })
+        const response = await api.post('Login', data)
         return Promise.resolve(response.data)
     } catch (error) {
-        console.error('Erro ao fazer login:', error)
+        Alert.alert('Erro', 'Erro ao fazer login.')
         return Promise.reject(error)
     }
 }

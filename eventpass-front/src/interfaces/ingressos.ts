@@ -4,4 +4,6 @@ export interface Ingresso {
   idUsuario: number
   nomeEvento: string
   dataEvento: string
+  flyerEvento: string
+  localEvento: string
 }

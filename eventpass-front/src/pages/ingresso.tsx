@@ -1,23 +1,41 @@
-import { Text, View, StyleSheet, ScrollView, Image } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, Image, Alert } from 'react-native'
 import { Button, Divider } from 'react-native-paper'
 import { useAuth } from '../contexts/Auth'
 import { useEffect, useState } from 'react'
 import { Usuario } from '../interfaces/usuarios'
-import { getUsuario } from '../services/getUsuarioService'
-import { formatarTipoUsuario } from '../utils/formatTipoUser'
-import { deleteEvento, getMyEventos } from '../services/getEventosService'
+import { getUsuario } from '../services/UsuarioService'
+import { deleteEvento, getMyEventos } from '../services/EventosService'
 import { Evento } from '../interfaces/eventos'
 import { formatarDataHora } from '../utils/formatData'
 import Loading from '../components/loading'
-import { deleteIngresso, getMyIngressos } from '../services/getIngressoService'
+import { deleteIngresso, getMyIngressos } from '../services/IngressoService'
 import { Ingresso } from '../interfaces/ingressos'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { HomeStackParamList } from '../router/AuthStack'
+import { useNavigation } from '@react-navigation/native'
+
+type HomeScreenNavigationProp = StackNavigationProp<
+  HomeStackParamList,
+  'CreateEvento',
+  'EventosPage'
+>
 
 const TicketPage: React.FC = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>()
   const [usuario, setUsuario] = useState<Usuario | null>(null)
   const [meusEventos, setMeusEventos] = useState<Array<Evento>>([])
   const [meusIngressos, setMeusIngressos] = useState<Array<Ingresso>>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const { user, signOut, refresh } = useAuth()
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false)
+  const { user } = useAuth()
+
+  const handleCreateEvento = () => {
+    navigation.navigate('CreateEvento')
+  }
+
+  const handlePressVisualizar = (idEvento: number) => {
+    navigation.navigate('EventosPage', { idEvento })
+  }
 
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -71,16 +89,32 @@ const TicketPage: React.FC = () => {
   }, [usuario, isGestor])
 
   const handleDeleteEvent = async (id: number) => {
-    await deleteEvento(id, user)
-    refresh()
+    setDeleteLoading(true)
+    try {
+      await deleteEvento(id, user)
+      const data = await getMyEventos(user)
+      setMeusEventos(data)
+    } finally {
+      setDeleteLoading(false)
+    }
   }
 
   const handleDeleteIngresso = async (id: number) => {
-    await deleteIngresso(id, user)
-    refresh()
+    setDeleteLoading(true)
+    try {
+      await deleteIngresso(id, user)
+      const data = await getMyIngressos(user)
+      setMeusIngressos(data)
+    } finally {
+      setDeleteLoading(false)
+    }
   }
 
-  if (loading) {
+  const handleEditEvent = async (id: number) => {
+    navigation.navigate('EditEvento', { idEvento: id })
+  }
+
+  if (loading || deleteLoading) {
     return <Loading />
   }
 
@@ -105,7 +139,7 @@ const TicketPage: React.FC = () => {
             <View style={styles.buttonGroup}>
               <Button
                 mode="text"
-                onPress={() => {}}
+                onPress={() => handlePressVisualizar(event.id)}
                 style={styles.button}
                 textColor="#f15a24"
                 icon="eye"
@@ -114,7 +148,7 @@ const TicketPage: React.FC = () => {
               </Button>
               <Button
                 mode="text"
-                onPress={() => {}}
+                onPress={() => handleEditEvent(event.id)}
                 style={styles.button}
                 textColor="#f15a24"
                 icon="pencil"
@@ -144,7 +178,7 @@ const TicketPage: React.FC = () => {
 
       <Button
         mode="contained-tonal"
-        onPress={() => {}}
+        onPress={() => handleCreateEvento()}
         style={styles.buttonCreate}
         textColor="#ffffff"
         buttonColor="#f15a24"
@@ -162,17 +196,22 @@ const TicketPage: React.FC = () => {
         meusIngressos.map((ingresso) => (
           <View key={ingresso.idIngresso}>
             <View style={styles.containerData}>
+              <Image
+                source={{ uri: ingresso.flyerEvento }}
+                style={styles.flyer}
+              />
               <View>
                 <Text style={styles.text}>{ingresso.nomeEvento}</Text>
                 <Text style={styles.titleData}>
                   {formatarDataHora(ingresso.dataEvento)}
                 </Text>
+                <Text style={styles.conteudo}>{ingresso.localEvento}</Text>
               </View>
             </View>
             <View style={styles.buttonGroup}>
               <Button
                 mode="text"
-                onPress={() => {}}
+                onPress={() => handlePressVisualizar(ingresso.idEvento)}
                 style={styles.button}
                 textColor="#f15a24"
                 icon="eye"
@@ -211,7 +250,7 @@ const TicketPage: React.FC = () => {
       ) : (
         <View>
           <Text style={styles.titleData}>
-            Você ainda não possui ingressos, compre um agora mesmo!
+            Você ainda não possui ingressos, retire um agora mesmo!
           </Text>
         </View>
       )}
@@ -278,6 +317,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   titleData: {
+    alignSelf: 'center',
     fontWeight: 'bold',
     color: '#F15A24',
     fontSize: 16,

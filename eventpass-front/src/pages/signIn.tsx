@@ -24,7 +24,7 @@ const Profile = () => {
       cpf,
       email,
       senha: password,
-      tipo: tipo,
+      tipo,
       confirmarSenha: confirmPassword,
     }
 
@@ -145,7 +145,6 @@ const Profile = () => {
           </View>
         )}
 
-        {/* Botão para alternar entre tela de login e cadastro */}
         <View style={styles.toggleButton}>
           <Button mode="text" onPress={handleToggleScreen} textColor="black">
             {isLogin
@@ -158,7 +157,7 @@ const Profile = () => {
             mode="contained"
             onPress={() => {
               if (isLogin) {
-                signIn(email, password)
+                signIn({ username: email, password })
               } else {
                 createUser()
               }
@@ -175,6 +174,7 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
     paddingHorizontal: 20,

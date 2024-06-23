@@ -3,14 +3,27 @@ import { Button } from 'react-native-paper'
 import { useAuth } from '../contexts/Auth'
 import { useEffect, useState } from 'react'
 import { Usuario } from '../interfaces/usuarios'
-import { getUsuario } from '../services/getUsuarioService'
+import { getUsuario } from '../services/UsuarioService'
 import { formatarTipoUsuario } from '../utils/formatTipoUser'
 import Loading from '../components/loading'
+import { useNavigation } from '@react-navigation/native'
+import { HomeStackParamList } from '../router/AuthStack'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+type HomeScreenNavigationProp = StackNavigationProp<
+  HomeStackParamList,
+  'EditProfile'
+>
 
 const ProfilePage: React.FC = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>()
   const [usuario, setUsuario] = useState<Usuario | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const { user, signOut } = useAuth()
+
+  const handlePress = (idUsuario: number) => {
+    navigation.navigate('EditProfile', { idUsuario })
+  }
 
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -34,42 +47,44 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>DADOS DO USUÁRIO</Text>
+    user && (
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.title}>DADOS DO USUÁRIO</Text>
+        </View>
+        <View style={styles.containerData}>
+          <Text style={styles.titleData}>Nome do usuário</Text>
+          <Text>{usuario?.nomeUsuario}</Text>
+          <Text style={styles.titleData}>CPF/CNPJ</Text>
+          <Text>{usuario?.cpf}</Text>
+          <Text style={styles.titleData}>Email</Text>
+          <Text>{usuario?.email}</Text>
+          <Text style={styles.titleData}>Tipo de usuário</Text>
+          <Text>{formatarTipoUsuario(usuario?.tipo)}</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            mode="outlined"
+            onPress={() => handlePress(usuario?.id || 0)}
+            style={styles.button}
+            textColor="#f15a24"
+            icon="pencil"
+          >
+            Editar perfil
+          </Button>
+          <Button
+            mode="contained"
+            onPress={async () => {
+              await signOut()
+            }}
+            buttonColor="#b61215"
+            style={styles.button}
+          >
+            Sair da conta
+          </Button>
+        </View>
       </View>
-      <View style={styles.containerData}>
-        <Text style={styles.titleData}>Nome do usuário</Text>
-        <Text>{usuario?.nomeUsuario}</Text>
-        <Text style={styles.titleData}>CPF/CNPJ</Text>
-        <Text>{usuario?.cpf}</Text>
-        <Text style={styles.titleData}>Email</Text>
-        <Text>{usuario?.email}</Text>
-        <Text style={styles.titleData}>Tipo de usuário</Text>
-        <Text>{formatarTipoUsuario(usuario?.tipo)}</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          mode="outlined"
-          onPress={() => {}}
-          style={styles.button}
-          textColor="#f15a24"
-          icon="pencil"
-        >
-          Editar perfil
-        </Button>
-        <Button
-          mode="contained"
-          onPress={async () => {
-            await signOut()
-          }}
-          buttonColor="#b61215"
-          style={styles.button}
-        >
-          Sair da conta
-        </Button>
-      </View>
-    </View>
+    )
   )
 }
 
