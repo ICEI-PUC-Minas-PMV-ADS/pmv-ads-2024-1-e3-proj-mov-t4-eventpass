@@ -1,9 +1,5 @@
 # Apresentação
 
-<span style="color:red">Pré-requisitos: Todos os demais artefatos</span>
-
-Conjunto de slides em um arquivo PowerPoint ou PDF com a apresentação do projeto contemplando todos os itens trabalhados nos demais artefatos.
-
 ## Título do Projeto
 
 Event Pass
@@ -16,9 +12,8 @@ Abaixo segue um arquivo PDF com a identificada visual adotada em toda a aplicaç
 
 ## Conjunto de Slides (Estrutura)
 
-O grupo deve distribuir de forma coerente o conteúdo a ser apresentado, dentro do tempo determinado. Importante ressaltar a importância da descrição clara de todo o andamento do projeto, insumos gerados e requisitos atendidos.
- 
-> **Links Úteis**:
-> - [A regra 10-20-30 para apresentações de sucesso](https://revistapegn.globo.com/Noticias/noticia/2014/07/regra-10-20-30-para-apresentacoes-de-sucesso.html)
-> - [Top Tips for Effective Presentations](https://www.skillsyouneed.com/present/presentation-tips.html)
-> - [How to make a great presentation](https://www.ted.com/playlists/574/how_to_make_a_great_presentation)
+[LINK - Slides](https://www.canva.com/design/DAFtDpXehf0/UIc6qjBGcRSl1C0GQLm2bQ/edit?utm_content=DAFtDpXehf0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+[LINK - Vídeo de Apresentação](https://www.youtube.com/watch?v=nsrrTZoEtBs)
+
+
